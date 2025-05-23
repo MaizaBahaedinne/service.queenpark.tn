@@ -30,7 +30,7 @@ class Reservation extends BaseController
          */
         public function service($reservation)
         {
-                $this->data['reservationId'] = $reservation ;
+                $data['reservationId'] = $reservation ;
                 $this->global["pageTitle"] = "service pour l'evenement ".$reservation;
                 $this->loadViews("service/home", $this->global, $data , null);
         }
