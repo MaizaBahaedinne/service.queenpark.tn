@@ -2,8 +2,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
-        <small>Control panel</small>
+        <i class="fa fa-tachometer" aria-hidden="true"></i> Tableau de bord
+        <small>Queen Park Services</small>
       </h1>
     </section>
     
@@ -83,11 +83,10 @@
                 <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
                     <tr>
-                        <th>date</th>
-                        <th>heure</th>
+                        <th>date & heure</th>
                         <th>salle</th>
                         <th>Evénement</th>
-                        <th>nom</th>
+                        <th>option</th>
 						           
                         
                         <th class="text-center">Actions</th>
@@ -99,11 +98,13 @@
                         {
                     ?>
                     <tr>
-                        <td><?php echo date_format(date_create($record->dateFin)  , 'd/m/20y');  ?><</td>
-                        <td><?php echo $record->heureDebut ?></td>
+                        <td><?php echo date_format(date_create($record->dateFin)  , 'd/m/20y');  ?><br><?php echo $record->heureDebut ?></td>
                         <td><?php echo $record->salle ?></td>
                         <td><?php echo $record->type ?><br><?php echo $record->titre ?></td>
-                        <td></td>
+                        <td>
+                          <?php if ($record->cuisine == 1 ){ echo '<i class="fas fa-utensils"></i> ';}  ?>
+                          <?php if ($record->tableCM == 1 ){ echo '<i class="fa fa-file" ></i> ';}  ?>
+                        </td>
                        
                         <td class="text-center">
                             
