@@ -63,25 +63,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="role">Role</label>
-                                        <select class="form-control required" id="role" name="role">
-                                            <option value="0">Select Role</option>
-                                            <?php
-                                            if(!empty($roles))
-                                            {
-                                                foreach ($roles as $rl)
-                                                {
-                                                    $roleText = $rl->role;
-                                                    $roleClass = false;
-                                                    if ($rl->roleStatus == INACTIVE) {
-                                                        $roleText = $rl->role . ' (Inactive)';
-                                                        $roleClass = true;
-                                                    }
-                                                    ?>
-                                                    <option value="<?php echo $rl->roleId ?>" <?php if ($roleClass) { echo "class=text-warning"; } if($rl->roleId == set_value('role')) {echo "selected=selected";} ?>><?= $roleText ?></option>
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
+                                        <select class="form-control required" id="role" name="role" readonly>
+                                            <option value="9">Serveur</option>
                                         </select>
                                     </div>
                                 </div>    
@@ -90,9 +73,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="isAdmin">User Type</label>
-                                        <select class="form-control required" id="isAdmin" name="isAdmin">
+                                        <select class="form-control required" id="isAdmin" name="isAdmin" readonly >
                                             <option value="<?= REGULAR_USER ?>">Regular User</option>
-                                            <option value="<?= SYSTEM_ADMIN ?>">System Administrator</option>
+                                            
                                         </select>
                                     </div>
                                 </div>
