@@ -27,17 +27,11 @@ class Reservation_model extends CI_Model
         $this->db->join('tbl_users as Locataire', 'Locataire.userId = BaseTbl.clientId','left');
         $this->db->join('tbl_salle as Salles', 'Salles.salleID = BaseTbl.salleId','left');
         
-
-        $this->db->where('affecation.userId  =',$userId );
-
         if($date == null){
-      // 
-
         $this->db->where('BaseTbl.dateFin >=  SUBDATE(NOW(),2) ');
-
         }
 
-       
+        $this->db->where('affecation.userId  =',$userId );
         $this->db->where('BaseTbl.statut in (0,1) ');
     
          $this->db->order_by('BaseTbl.dateFin ASC');

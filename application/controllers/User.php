@@ -38,7 +38,7 @@ class User extends BaseController
 
         $this->global['pageTitle'] = 'CodeInsect : Dashboard';
 
-        $data['userRecords'] = $this->reservation_model->ReservationListing(); 
+        $data['userRecords'] = $this->reservation_model->ReservationListing(null,$this->vendorId ); 
         
         $this->loadViews("general/dashboard", $this->global, $data , NULL);
     }
