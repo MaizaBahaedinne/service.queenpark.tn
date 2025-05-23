@@ -18,26 +18,23 @@ class Reservation_model extends CI_Model
      * @param number $segment : This is pagination limit
      * @return array $result : This is result
      */
-    function ReservationListing($date = null)
+    function ReservationAffecationListing($date = null, $userId )
     {
         $this->db->select('BaseTbl.reservationId , BaseTbl.salleId , BaseTbl.titre , BaseTbl.type , BaseTbl.prix ,  BaseTbl.dateDebut , BaseTbl.heureDebut , BaseTbl.dateFin , BaseTbl.heureFin , BaseTbl.cuisine , BaseTbl.tableCM  , BaseTbl.nbPlace , BaseTbl.noteAdmin , BaseTbl.statut , Client.name clientName , Client.mobile , Salles.nom salle');
         $this->db->from('tbl_reservation as BaseTbl');
+        $this->db->join('tbl_service_affectation as affecation', 'affecation.reservationId = BaseTbl.reservationId','left');
         $this->db->join('tbl_users as Client', 'Client.userId = BaseTbl.clientId','left');
         $this->db->join('tbl_users as Locataire', 'Locataire.userId = BaseTbl.clientId','left');
         $this->db->join('tbl_salle as Salles', 'Salles.salleID = BaseTbl.salleId','left');
         
+
+        $this->db->where('affecation.userId  =',$userId );
+
         if($date == null){
       // 
 
         $this->db->where('BaseTbl.dateFin >=  SUBDATE(NOW(),2) ');
 
-        }
-
-       
-
-        if( $date != null ){
-         $this->db->where("BaseTbl.dateFin >=   '".$date."'" );
-        
         }
 
        

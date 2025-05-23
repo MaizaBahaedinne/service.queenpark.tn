@@ -99,7 +99,7 @@
                         {
                     ?>
                     <tr>
-                        <td><?php echo $record->dateFin ?></td>
+                        <td><?php echo date_format(date_create($record->dateFin)  , 'd/m/20y');  ?><</td>
                         <td><?php echo $record->heureDebut ?></td>
                         <td><?php echo $record->salle ?></td>
                         <td><?php echo $record->type ?><br><?php echo $record->titre ?></td>
