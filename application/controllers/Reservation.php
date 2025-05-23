@@ -51,18 +51,10 @@ class Reservation extends BaseController
         /**
          * This function used to load the first screen of the user
          */
-        public function Calender()
+        public function service()
         {
-                
-                $data["userRecords"] = $this->reservation_model->ReservationListing();
-                     foreach ($data["userRecords"]  as $rerva) {
-        
-                         $rerva->prestation = $this->prestation_model->ReservationListing($rerva->reservationId) ; 
-                       }   
                 $this->global["pageTitle"] = "Reservation des salles";
-                $this->global["calenderOK"] = true ;
-                $this->global["calenderType"] = 'dayGridMonth' ;
-                $this->loadViews("reservation/calender", $this->global, $data, null);
+                $this->loadViews("service/home", $this->global, null , null);
         }
 
 

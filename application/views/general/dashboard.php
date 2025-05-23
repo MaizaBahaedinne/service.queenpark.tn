@@ -107,7 +107,7 @@
                         </td>
                        
                         <td class="text-center">
-                            <a class="btn btn-sm btn-primary" href="<?php echo base_url().'Reservation/'.$record->reservationId; ?>" title="Edit"><i class="fa fa-eye"></i> Service </a>
+                            <a class="btn btn-sm btn-primary" href="<?php echo base_url().'Reservation/service/'.$record->reservationId; ?>" title="Edit"><i class="fa fa-eye"></i> Service </a>
                         </td>
                     </tr>
                     <?php
