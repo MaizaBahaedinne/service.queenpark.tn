@@ -40,7 +40,7 @@
               <div class="small-box bg-yellow">
                 <div class="inner">
                   <h3>44</h3>
-                  <p>CLoture</p>
+                  <p>Retour</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-log-out"></i>

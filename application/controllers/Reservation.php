@@ -28,10 +28,22 @@ class Reservation extends BaseController
         /**
          * This function used to load the first screen of the user
          */
-        public function service()
+        public function service($reservation)
         {
-                $this->global["pageTitle"] = "Reservation des salles";
-                $this->loadViews("service/home", $this->global, null , null);
+                $this->data['reservationId'] = $reservation ;
+                $this->global["pageTitle"] = "service pour l'evenement ".$reservation;
+                $this->loadViews("service/home", $this->global, $data , null);
+        }
+
+
+                /**
+         * This function used to load the first screen of the user
+         */
+        public function entree($reservation)
+        {
+
+                $this->global["pageTitle"] = "Les entrées pour la soirée";
+                $this->loadViews("service/entre", $this->global, null , null);
         }
 
 
