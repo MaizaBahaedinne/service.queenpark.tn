@@ -27,6 +27,15 @@ class User extends BaseController
      */
     public function index()
     {
+
+        $searchText = '';
+            if(!empty($this->input->post('searchText'))) {
+                $searchText = $this->security->xss_clean($this->input->post('searchText'));
+            }
+            $data['searchText'] = $searchText;
+            
+
+
         $this->global['pageTitle'] = 'CodeInsect : Dashboard';
 
         $data['userRecords'] = $this->reservation_model->ReservationListing(); 
