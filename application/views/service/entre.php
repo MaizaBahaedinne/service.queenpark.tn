@@ -84,7 +84,7 @@ button {
      
     <section class="content">
        <div class="row">
-            <div class="col-lg-3 col-xs-6">
+            <div class="col-lg-12 col-xs-12">
 
               <form method="post" action="/entrees/save_multiple" class="form-style">
                 <div id="entree-container">
