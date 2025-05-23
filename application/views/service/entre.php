@@ -1,10 +1,6 @@
 <style>
   
-  body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  padding: 30px;
-}
+
 
 .form-style {
   background: white;
