@@ -18,6 +18,7 @@ class User extends BaseController
     {
         parent::__construct();
         $this->load->model('user_model');
+        $this->load->model('reservation_model');
         $this->isLoggedIn();
     }
     
@@ -27,8 +28,10 @@ class User extends BaseController
     public function index()
     {
         $this->global['pageTitle'] = 'CodeInsect : Dashboard';
+
+        $data['userRecords'] = $this->reservation_model->ReservationListing(); 
         
-        $this->loadViews("general/dashboard", $this->global, NULL , NULL);
+        $this->loadViews("general/dashboard", $this->global, $data , NULL);
     }
     
     /**
