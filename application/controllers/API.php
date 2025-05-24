@@ -55,7 +55,8 @@ class API extends CI_Controller
             }
 
             $user = $this->session->userdata('name') ?? 'inconnu';
-            $update['note'] = "MAJ par $user le " . date('d/m/Y H:i:s') . "<br>" . htmlspecialchars($entree['note'], ENT_QUOTES, 'UTF-8');
+            $update['note'] = . $entree['note'] . "<br>------------------ ". date('d/m/Y H:i:s') ." MAJ par <b> $user </b> " 
+             "<br> ajout de ".$quantite. " vers ".$moment_service . "l'évenementÒ"  ;
 
             $this->services_model->update($id, $update);
 
