@@ -241,62 +241,61 @@ button {
       </script>
 
 
-      <script>
-        
-        document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.entree-row').forEach(row => {
-          const input = row.querySelector('.quantite-input');
-          const select = row.querySelector('.moment-select');
-          const bouton = row.querySelector('.btn-confirmer');
-          const momentInitial = select.value;
+     <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.entree-row').forEach(row => {
+      const input = row.querySelector('.quantite-input');
+      const select = row.querySelector('.moment-select');
+      const bouton = row.querySelector('.btn-confirmer');
 
-          // Fonction qui check si on doit afficher le bouton confirmer
-          const toggleBouton = () => {
-            const quantite = parseInt(input.value) || 0;
-            const momentModifie = select.value !== momentInitial;
-            bouton.style.display = (quantite > 0 || momentModifie) ? 'inline-block' : 'none';
-          };
+      // Stocke dynamiquement le moment initial dans un dataset
+      if (!select.dataset.initial) {
+        select.dataset.initial = select.value;
+      }
 
-          input.addEventListener('input', toggleBouton);
-          select.addEventListener('change', toggleBouton);
+      // Fonction qui check si on doit afficher le bouton confirmer
+      const toggleBouton = () => {
+        const quantite = parseInt(input.value) || 0;
+        const momentModifie = select.value !== select.dataset.initial;
+        bouton.style.display = (quantite > 0 || momentModifie) ? 'inline-block' : 'none';
+      };
 
-          bouton.addEventListener('click', async () => {
-            const id = row.dataset.id;
-            const quantite = input.value;
-            const moment_service = select.value;
+      input.addEventListener('input', toggleBouton);
+      select.addEventListener('change', toggleBouton);
 
-            try {
-              const response = await fetch('<?= base_url("/Reservation/update_entree") ?>', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, quantite, moment_service })
-              });
+      bouton.addEventListener('click', async () => {
+        const id = row.dataset.id;
+        const quantite = input.value;
+        const moment_service = select.value;
 
-              if (!response.ok) throw new Error('Erreur serveur');
-
-              bouton.textContent = '✅ Enregistré';
-              bouton.classList.replace('btn-success', 'btn-secondary');
-
-              setTimeout(() => {
-                bouton.textContent = '✅ Confirmer';
-                bouton.classList.replace('btn-secondary', 'btn-success');
-                bouton.style.display = 'none';
-                input.value = '';
-                // Met à jour momentInitial après validation
-                // Sinon le bouton réapparaitra si on ne modifie pas le moment
-                select.dataset.initial = moment_service;
-              }, 1500);
-            } catch (err) {
-              alert('Erreur lors de la mise à jour, réessaye.');
-            }
+        try {
+          const response = await fetch('<?= base_url("/Reservation/update_entree") ?>', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, quantite, moment_service })
           });
 
-          // Initialisation pour que toggleBouton marche au chargement si besoin
-          toggleBouton();
-        });
+          if (!response.ok) throw new Error('Erreur serveur');
+
+          bouton.textContent = '✅ Enregistré';
+          bouton.classList.replace('btn-success', 'btn-secondary');
+
+          setTimeout(() => {
+            bouton.textContent = '✅ Confirmer';
+            bouton.classList.replace('btn-secondary', 'btn-success');
+            bouton.style.display = 'none';
+            input.value = '';
+            select.dataset.initial = moment_service; // 🔁 Update ici
+          }, 1500);
+        } catch (err) {
+          alert('Erreur lors de la mise à jour, réessaye.');
+        }
       });
 
+      toggleBouton(); // Init au chargement
+    });
+  });
+</script>
 
-      </script>
 
 

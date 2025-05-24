@@ -49,96 +49,71 @@ class Reservation extends BaseController
         }
 
 
-        public function addEntrees($reservationId)
+        public function update_entree()
                 {
-                            $reservationId = $reservationId ;
-                            $quantites = $this->input->post('quantite');
-                            $natures = $this->input->post('nature');
-                            $moments = $this->input->post('moment_service');
-                            $notes = " ------------------  ".date('d/m/Y H:i:s')." - Nouveau entrée par ".$this->name." ------------------  <br>" ;
-
-                            $createdBy = $this->vendorId; // ou $this->session->userdata('userId');
-                            $createdDTM = date('Y-m-d H:i:s');
-
-                            
-                            $dataToInsert = [];
-
-                            for ($i = 0; $i < count($quantites); $i++) {
-                                    if (trim($quantites[$i]) !== '') {
-                                        $note = "------------------  " . date('d/m/Y H:i:s') . "  Nouveau entrée par " . $this->name . " ------------------ <br>" .
-                                                "quantite : " . $quantites[$i] . "<br>" .
-                                                "nature : " . $natures[$i] . "<br>";
-
-                                        $dataToInsert[] = array(
-                                            'reservationId'   => $reservationId,
-                                            'quantite'        => $quantites[$i],
-                                            'nature'          => $natures[$i],
-                                            'moment_service'  => $moments[$i],
-                                            'note'            => $note
-                                        );
-                                    }
-                                }
-                            
-
-                            if (!empty($dataToInsert)) {
-                                $result = $this->services_model->insertMultipleEntrees($dataToInsert);
-
-                                if ($result) {
-                                    $this->session->set_flashdata('success', 'Entrées ajoutées avec succès');
-                                } else {
-                                    $this->session->set_flashdata('error', 'Erreur lors de l’enregistrement');
-                                }
-                            } else {
-                                $this->session->set_flashdata('error', 'Aucune entrée valide');
-                            }
-                            redirect('/Reservation/entree/'.$reservationId); // redirection vers une liste ou autre vue
-                        
+                    // Vérifie que la requête est bien en POST
+                    if ($this->request->getMethod() !== 'post') {
+                        return $this->response->setStatusCode(405)->setJSON(['error' => 'Méthode non autorisée']);
                     }
 
+                    // Récupère les données JSON envoyées depuis le JS
+                    $data = $this->request->getJSON();
 
-         public function update_entree() {
-                // On s'assure que c'est bien une requête AJAX POST
-                if ($this->input->method() !== 'post') {
-                    return $this->output
-                                ->set_status_header(405)
-                                ->set_output(json_encode(['error' => 'Method not allowed']));
+                    // Sécurisation & validation
+                    if (!isset($data->id)) {
+                        return $this->response->setStatusCode(400)->setJSON(['error' => 'ID manquant']);
+                    }
+
+                    $id = (int) $data->id;
+                    $quantite = isset($data->quantite) ? (int) $data->quantite : 0;
+                    $moment_service = isset($data->moment_service) ? trim($data->moment_service) : null;
+
+                    // Prépare les champs à mettre à jour
+                    $fields = [];
+
+                    if ($quantite > 0) {
+                        $fields['quantite'] = $quantite;
+                    }
+
+                    if (!empty($moment_service)) {
+                        $fields['moment_service'] = $moment_service;
+                    }
+
+                    // Si aucun champ modifié, rien à faire
+                    if (empty($fields)) {
+                        return $this->response->setStatusCode(400)->setJSON(['error' => 'Aucune modification']);
+                    }
+
+                    // Ajoute un log de modification dans le champ "note"
+                    $userName = $this->session->get('name') ?? 'Inconnu';
+                    $now = date('d/m/Y H:i:s');
+
+                    $noteLine = "🕒 $now - Modification par $userName<br>";
+                    if (isset($fields['quantite'])) {
+                        $noteLine .= "➕ Quantité modifiée à : {$fields['quantite']}<br>";
+                    }
+                    if (isset($fields['moment_service'])) {
+                        $noteLine .= "🔄 Moment modifié à : {$fields['moment_service']}<br>";
+                    }
+
+                    // Récupération de la note existante
+                    $model = new \App\Models\EntreeModel(); // Remplace par ton modèle réel
+                    $entree = $model->find($id);
+                    if (!$entree) {
+                        return $this->response->setStatusCode(404)->setJSON(['error' => 'Entrée non trouvée']);
+                    }
+
+                    $fields['note'] = $noteLine . '<hr>' . $entree['note'];
+
+                    // Mise à jour en base
+                    $model->update($id, $fields);
+
+                    return $this->response->setJSON(['success' => true, 'message' => 'Entrée mise à jour']);
                 }
 
-                // Récupérer les données JSON brutes envoyées par fetch()
-                $json = file_get_contents('php://input');
-                $data = json_decode($json, true);
 
-                // Validation simple
-                if (!isset($data['id'], $data['quantite'], $data['moment_service'])) {
-                    return $this->output
-                                ->set_status_header(400)
-                                ->set_output(json_encode(['error' => 'Données manquantes']));
-                }
 
-                $id = (int) $data['id'];
-                $quantite = (int) $data['quantite'];
-                $moment_service = $this->db->escape_str($data['moment_service']);
-
-                // Prépare les données à mettre à jour
-                $updateData = [
-                    'quantite' => $quantite,
-                    'moment_service' => $moment_service
-                    
-                ];
-
-                // Effectue la mise à jour via le modèle
-                $success = $this->Entree_model->update_entree($id, $updateData);
-
-                if ($success) {
-                    return $this->output
-                                ->set_content_type('application/json')
-                                ->set_output(json_encode(['success' => true]));
-                } else {
-                    return $this->output
-                                ->set_status_header(500)
-                                ->set_output(json_encode(['error' => 'Erreur lors de la mise à jour']));
-                }
-            }
+         
                 
 
 
