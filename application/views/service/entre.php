@@ -93,7 +93,7 @@ button {
               <div class="row">
                 <div class="col">
                   <label>Quantité existante</label>
-                  <input type="number" value="<?= $entree->quantite ?>" readonly>
+                  <p><?= $entree->quantite ?>"</p>
                 </div>
                 <div class="col">
                   <label>Ajouter quantité</label>
@@ -101,7 +101,7 @@ button {
                 </div>
                 <div class="col">
                   <label>Nature</label>
-                  <input type="text" value="<?= $entree->nature ?>" readonly>
+                  <p>"<?= $entree->nature ?>" </p>
                 </div>
                 <div class="col">
                   <label>Moment</label>
