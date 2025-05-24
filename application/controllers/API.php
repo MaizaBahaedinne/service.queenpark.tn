@@ -48,7 +48,7 @@ class API extends CI_Controller
 
             $update = [];
             if ($quantite > 0) {
-                $update['quantite'] = $entree + $quantite;
+                $update['quantite'] = $entree['quantite'] + $quantite;
             }
             if ($moment_service) {
                 $update['moment_service'] = $moment_service;
