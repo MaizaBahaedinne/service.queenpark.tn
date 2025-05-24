@@ -86,49 +86,58 @@ button {
       <div class="col-lg-12 col-xs-12">
         <form method="post" action="<?php echo base_url() ?>/Reservation/addEntrees/<?php echo $reservation->reservationId ?>" class="form-style">
 
-          <!-- 🔁 ENTRÉES EXISTANTES -->
-          <h3>Entrées existantes</h3>
-          <?php foreach ($entrees as $entree) : ?>
-            <div class="entree-row old-entry">
-              <div class="row">
-                <div class="col">
-                  
-                  <h4><?= $entree->quantite ?></h4>
-                </div>
-                <div class="col">
-                  
-                  <input type="number" name="ajout_quantite[<?= $entree->id ?>]" min="0" placeholder="Ajouter...">
-                </div>
-                <div class="col">
-                  
-                  <H4><?= $entree->nature ?></H4>
-                </div>
-                <div class="col">
-                  
-                  <select name="moment_service_update[<?= $entree->id ?>]" required>
-                    <option value="">-- Choisir --</option>
-                    <option value="debut" <?= $entree->moment_service == 'debut' ? 'selected' : '' ?>>Début</option>
-                    <option value="diner" <?= $entree->moment_service == 'diner' ? 'selected' : '' ?>>Dîner</option>
-                    <option value="milieu" <?= $entree->moment_service == 'milieu' ? 'selected' : '' ?>>Milieu</option>
-                    <option value="fin" <?= $entree->moment_service == 'fin' ? 'selected' : '' ?>>Fin</option>
-                  </select>
-                </div>
-                <?php
-                if($is_admin == 1)
-                {
-                ?>
-                <div class="col">
-                  <label>Note</label>
-                  <textarea type="text" name="note_update[<?= $entree->id ?>]">
-                    <?= $entree->note ?>
-                  </textarea>
-                </div>
-                 <?php
-                }
-                ?>
-              </div>
-            </div>
-          <?php endforeach; ?>
+<!-- 🔁 ENTRÉES EXISTANTES -->
+<h3>Entrées existantes</h3>
+<?php foreach ($entrees as $entree) : ?>
+  <div class="entree-row old-entry">
+    <div class="row align-items-center mb-3">
+      
+      <div class="col">
+        <strong><?= $entree->quantite ?>x</strong>
+      </div>
+      
+      <div class="col">
+        <input type="number" name="ajout_quantite[<?= $entree->id ?>]" min="0" class="form-control" placeholder="Ajouter...">
+      </div>
+      
+      <div class="col">
+        <span class="badge bg-primary"><?= ucfirst($entree->nature) ?></span>
+      </div>
+      
+      <div class="col">
+        <select name="moment_service_update[<?= $entree->id ?>]" class="form-select" required>
+          <option value="">-- Choisir --</option>
+          <option value="debut" <?= $entree->moment_service == 'debut' ? 'selected' : '' ?>>Début</option>
+          <option value="diner" <?= $entree->moment_service == 'diner' ? 'selected' : '' ?>>Dîner</option>
+          <option value="milieu" <?= $entree->moment_service == 'milieu' ? 'selected' : '' ?>>Milieu</option>
+          <option value="fin" <?= $entree->moment_service == 'fin' ? 'selected' : '' ?>>Fin</option>
+        </select>
+      </div>
+
+      <div class="col">
+        <!-- 📝 Bouton pour ouvrir le modal -->
+        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#noteModal<?= $entree->id ?>">
+          Voir la note
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 💬 MODAL de la note -->
+  <div class="modal fade" id="noteModal<?= $entree->id ?>" tabindex="-1" aria-labelledby="noteModalLabel<?= $entree->id ?>" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="noteModalLabel<?= $entree->id ?>">Note pour <?= $entree->nature ?></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          <p><?= nl2br(htmlspecialchars($entree->note)) ?></p>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php endforeach; ?>
 
           <!-- ➕ NOUVELLES ENTRÉES -->
           <h3>Ajouter de nouvelles entrées</h3>
