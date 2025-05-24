@@ -10,10 +10,10 @@
     <section class="content">
        <div class="row">
             <div class="col-lg-3 col-xs-6">
-             <a href="<?php echo base_url() ?>Reservation/entree/<?php echo $reservationId ?>" >
-              <div class="small-box bg-aqua">
+             <a href="<?php echo base_url() ?>Reservation/entree/<?php echo $reservationId ?>"  class="small-box bg-aqua" >
+              <div >
                 <div class="inner">
-                  <h3>Entrées</h3>
+                  <h3 style="color: white;">Entrées</h3>
                   <p></p>
                 </div>
                 <div class="icon">
