@@ -153,7 +153,7 @@ button {
                 </div>
                 <div class="col">
                   <label>Note</label>
-                  <input type="text" name="note[]">
+                  <input hidden type="text" name="note[]">
                 </div>
                 <div class="col delete-col">
                   <button type="button" class="remove-btn">X</button>
