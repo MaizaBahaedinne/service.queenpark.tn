@@ -94,11 +94,12 @@ button {
                 <strong><?= $entree->quantite ?>x</strong>
               </div>
               <div class="col">
-                <input type="number" name="ajout_quantite[<?= $entree->id ?>]" min="0" class="form-control" placeholder="Ajouter...">
-              </div>
-              <div class="col">
                 <span class="badge bg-primary"><?= ucfirst($entree->nature) ?></span>
               </div>
+              <div class="col">
+                <input type="number" name="ajout_quantite[<?= $entree->id ?>]" min="0" class="form-control" placeholder="Ajouter...">
+              </div>
+              
               <div class="col">
                 <select name="moment_service_update[<?= $entree->id ?>]" class="form-select" required>
                   <option value="">-- Choisir --</option>
