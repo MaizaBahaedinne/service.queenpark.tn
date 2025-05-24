@@ -20,45 +20,47 @@ class API extends CI_Controller
     }
 
     public function update_entree()
-    {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            show_error('Méthode non autorisée', 405);
+        {
+            try {
+                if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                    return $this->respond(['error' => 'Méthode non autorisée'], 405);
+                }
+
+                $raw = file_get_contents("php://input");
+                $data = json_decode($raw);
+
+                if (!isset($data->id)) {
+                    return $this->respond(['error' => 'ID manquant'], 400);
+                }
+
+                $id = (int) $data->id;
+                $quantite = isset($data->quantite) ? (int) $data->quantite : 0;
+                $moment_service = isset($data->moment_service) ? $data->moment_service : '';
+
+                $entree = $this->services_model->getById($id);
+                if (!$entree) {
+                    return $this->respond(['error' => 'Entrée introuvable'], 404);
+                }
+
+                $update = [];
+                if ($quantite > 0) {
+                    $update['quantite'] = $quantite;
+                }
+                if ($moment_service) {
+                    $update['moment_service'] = $moment_service;
+                }
+
+                $user = $this->session->userdata('name') ?? 'inconnu';
+                $update['note'] = "MAJ par $user le ".date('d/m/Y H:i:s')."<br>".htmlspecialchars($entree['note'], ENT_QUOTES, 'UTF-8');
+
+                $this->services_model->update($id, $update);
+
+                return $this->respond(['success' => true]);
+            } catch (Exception $e) {
+                log_message('error', 'Erreur update_entree: '.$e->getMessage());
+                return $this->respond(['error' => 'Erreur serveur'], 500);
+            }
         }
 
-        $raw = file_get_contents("php://input");
-        $data = json_decode($raw);
-
-        if (!isset($data->id)) {
-            show_error('ID manquant', 400);
-        }
-
-        $id = (int) $data->id;
-        $quantite = isset($data->quantite) ? (int) $data->quantite : 0;
-        $moment_service = isset($data->moment_service) ? $data->moment_service : '';
-
-        $update = [];
-
-        if ($quantite > 0) {
-            $update['quantite'] = $quantite;
-        }
-
-        if ($moment_service) {
-            $update['moment_service'] = $moment_service;
-        }
-
-        $entree = $this->services_model->getById($id);
-
-        if (!$entree) {
-            echo json_encode(['error' => 'Entrée introuvable']);
-            return;
-        }
-
-        $user = $this->session->userdata('name') ?? 'inconnu';
-        $update['note'] = "MAJ par $user le ".date('d/m/Y H:i:s')."<br>".$entree['note'];
-
-        $this->services_model->update($id, $update);
-
-        echo json_encode(['success' => true]);
-    }  
 }
 ?>
