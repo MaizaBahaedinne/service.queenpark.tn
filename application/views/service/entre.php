@@ -284,7 +284,7 @@ button {
         const moment_service = select.value;
 
         try {
-          const response = await fetch('<?= base_url("Reservation/update_entree") ?>', {
+          const response = await fetch('<?= base_url("API/update_entree") ?>', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
