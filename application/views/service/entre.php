@@ -123,7 +123,7 @@ button {
 
             <!-- Bloc note masqué -->
             <div id="note-<?= $entree->entreeId ?>" class="note-content mt-2" style="display: none; background: #f9f9f9; padding: 10px; border-left: 3px solid #007bff;">
-              <?= nl2br(htmlspecialchars($entree->note)) ?>
+              <?php echo $entree->note ?>
             </div>
           </div>
         <?php endforeach; ?>
