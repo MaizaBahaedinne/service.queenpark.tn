@@ -22,7 +22,7 @@ class Services_model extends CI_Model
         $this->db->select('BaseTbl.*');
         $this->db->from('tbl_services_entrees as BaseTbl');
        	
-        
+        $this->db->where('BaseTbl.reservationId', $resId);
         $query = $this->db->get();
         
         $result = $query->result();        

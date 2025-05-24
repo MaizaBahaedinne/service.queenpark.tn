@@ -73,64 +73,108 @@ button {
 </style>
 
 
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <i class="fa fa-tachometer" aria-hidden="true"></i> Gestion des entrées 
-        <small>Ajout des entrée pour l'évenement de <?php echo $reservation->dateFin ?> à  <?php echo $reservation->salle ?> </small>
-      </h1>
-    </section>
-     
-    <section class="content">
-       <div class="row">
-            <div class="col-lg-12 col-xs-12">
+<<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      <i class="fa fa-tachometer"></i> Gestion des entrées
+      <small>Ajout des entrées pour l’évènement du <?php echo $reservation->dateFin ?> à <?php echo $reservation->salle ?></small>
+    </h1>
+  </section>
 
-              <form method="post" action="<?php echo base_url() ?>/Reservation/addEntrees/<?php echo $reservation->reservationId ?> " class="form-style">
-                <div id="entree-container">
-                  <div class="entree-row">
-                    <div class="row">
-                      <div class="col">
-                        <label>Quantité</label>
-                        <input type="number" name="quantite[]" required>
-                      </div>
-                      <div class="col">
-                        <label>Nature</label>
-                        <input list="natures" name="nature[]" placeholder="Ex: Jus, Gâteau..." required>
-                      </div>
-                      <div class="col">
-                        <label>Moment</label>
-                        <select name="moment_service[]" required>
-                          <option value="">-- Choisir --</option>
-                          <option value="debut">Début</option>
-                          <option value="diner">Dîner</option>
-                          <option value="milieu">Milieu</option>
-                          <option value="fin">Fin</option>
-                        </select>
-                      </div>
-                      <div class="col">
-                        <label>Note</label>
-                        <input hiden type="text" name="note[]" readonly>
-                      </div>
-                      <div class="col delete-col">
-                        <button type="button" class="remove-btn">X</button>
-                      </div>
-                    </div>
-                  </div>
+  <section class="content">
+    <div class="row">
+      <div class="col-lg-12 col-xs-12">
+        <form method="post" action="<?php echo base_url() ?>/Reservation/addEntrees/<?php echo $reservation->reservationId ?>" class="form-style">
+
+          <!-- 🔁 ENTRÉES EXISTANTES -->
+          <h3>Entrées existantes</h3>
+          <?php foreach ($entrees as $entree) : ?>
+            <div class="entree-row old-entry">
+              <div class="row">
+                <div class="col">
+                  <label>Quantité existante</label>
+                  <input type="number" value="<?= $entree->quantite ?>" readonly>
                 </div>
-
-                <datalist id="natures"></datalist>
-
-                <div class="form-buttons">
-                  <button type="button" id="add-row">+ Ajouter une ligne</button>
-
-                  <button type="submit">Enregistrer</button>
+                <div class="col">
+                  <label>Ajouter quantité</label>
+                  <input type="number" name="ajout_quantite[<?= $entree->id ?>]" min="0" placeholder="Ajouter...">
                 </div>
-              </form>
+                <div class="col">
+                  <label>Nature</label>
+                  <input type="text" value="<?= $entree->nature ?>" readonly>
+                </div>
+                <div class="col">
+                  <label>Moment</label>
+                  <select name="moment_service_update[<?= $entree->id ?>]" required>
+                    <option value="">-- Choisir --</option>
+                    <option value="debut" <?= $entree->moment_service == 'debut' ? 'selected' : '' ?>>Début</option>
+                    <option value="diner" <?= $entree->moment_service == 'diner' ? 'selected' : '' ?>>Dîner</option>
+                    <option value="milieu" <?= $entree->moment_service == 'milieu' ? 'selected' : '' ?>>Milieu</option>
+                    <option value="fin" <?= $entree->moment_service == 'fin' ? 'selected' : '' ?>>Fin</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label>Note</label>
+                  <input type="text" name="note_update[<?= $entree->id ?>]" value="<?= $entree->note ?>">
+                </div>
+              </div>
+            </div>
+          <?php endforeach; ?>
+
+          <!-- ➕ NOUVELLES ENTRÉES -->
+          <h3>Ajouter de nouvelles entrées</h3>
+          <div id="entree-container">
+            <div class="entree-row">
+              <div class="row">
+                <div class="col">
+                  <label>Quantité</label>
+                  <input type="number" name="quantite[]" required>
+                </div>
+                <div class="col">
+                  <label>Nature</label>
+                  <input list="natures" name="nature[]" required>
+                </div>
+                <div class="col">
+                  <label>Moment</label>
+                  <select name="moment_service[]" required>
+                    <option value="">-- Choisir --</option>
+                    <option value="debut">Début</option>
+                    <option value="diner">Dîner</option>
+                    <option value="milieu">Milieu</option>
+                    <option value="fin">Fin</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label>Note</label>
+                  <input type="text" name="note[]">
+                </div>
+                <div class="col delete-col">
+                  <button type="button" class="remove-btn">X</button>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
+
+          <datalist id="natures">
+            <!-- Optionnel : tu peux mettre des valeurs par défaut -->
+            <option value="Jus">
+            <option value="Eau">
+            <option value="Pâtisserie">
+            <option value="Gâteau">
+            <option value="Salé">
+          </datalist>
+
+          <!-- ✅ BOUTONS -->
+          <div class="form-buttons">
+            <button type="button" id="add-row">+ Ajouter une ligne</button>
+            <button type="submit">Enregistrer</button>
+          </div>
+        </form>
       </div>
+    </div>
+  </section>
+</div>
+
 
 
 
