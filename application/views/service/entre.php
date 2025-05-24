@@ -93,7 +93,7 @@ button {
               <div class="row">
                 <div class="col">
                   <label>Quantité existante</label>
-                  <h4><?= $entree->quantite ?>"</h4>
+                  <h4><?= $entree->quantite ?></h4>
                 </div>
                 <div class="col">
                   <label>Ajouter quantité</label>
