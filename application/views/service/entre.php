@@ -86,7 +86,7 @@ button {
        <div class="row">
             <div class="col-lg-12 col-xs-12">
 
-              <form method="post" action="/entrees/save_multiple" class="form-style">
+              <form method="post" action="<?php echo base_url() ?>/Reservation/addEntrees" class="form-style">
                 <div id="entree-container">
                   <div class="entree-row">
                     <div class="row">
