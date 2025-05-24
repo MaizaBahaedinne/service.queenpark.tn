@@ -86,58 +86,42 @@ button {
       <div class="col-lg-12 col-xs-12">
         <form method="post" action="<?php echo base_url() ?>/Reservation/addEntrees/<?php echo $reservation->reservationId ?>" class="form-style">
 
-<!-- 🔁 ENTRÉES EXISTANTES -->
-<h3>Entrées existantes</h3>
-<?php foreach ($entrees as $entree) : ?>
-  <div class="entree-row old-entry">
-    <div class="row align-items-center mb-3">
-      
-      <div class="col">
-        <strong><?= $entree->quantite ?>x</strong>
-      </div>
-      
-      <div class="col">
-        <input type="number" name="ajout_quantite[<?= $entree->id ?>]" min="0" class="form-control" placeholder="Ajouter...">
-      </div>
-      
-      <div class="col">
-        <span class="badge bg-primary"><?= ucfirst($entree->nature) ?></span>
-      </div>
-      
-      <div class="col">
-        <select name="moment_service_update[<?= $entree->id ?>]" class="form-select" required>
-          <option value="">-- Choisir --</option>
-          <option value="debut" <?= $entree->moment_service == 'debut' ? 'selected' : '' ?>>Début</option>
-          <option value="diner" <?= $entree->moment_service == 'diner' ? 'selected' : '' ?>>Dîner</option>
-          <option value="milieu" <?= $entree->moment_service == 'milieu' ? 'selected' : '' ?>>Milieu</option>
-          <option value="fin" <?= $entree->moment_service == 'fin' ? 'selected' : '' ?>>Fin</option>
-        </select>
-      </div>
+        <h3>Entrées existantes</h3>
+        <?php foreach ($entrees as $entree) : ?>
+          <div class="entree-row old-entry mb-3" style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+            <div class="row align-items-center">
+              <div class="col">
+                <strong><?= $entree->quantite ?>x</strong>
+              </div>
+              <div class="col">
+                <input type="number" name="ajout_quantite[<?= $entree->id ?>]" min="0" class="form-control" placeholder="Ajouter...">
+              </div>
+              <div class="col">
+                <span class="badge bg-primary"><?= ucfirst($entree->nature) ?></span>
+              </div>
+              <div class="col">
+                <select name="moment_service_update[<?= $entree->id ?>]" class="form-select" required>
+                  <option value="">-- Choisir --</option>
+                  <option value="debut" <?= $entree->moment_service == 'debut' ? 'selected' : '' ?>>Début</option>
+                  <option value="diner" <?= $entree->moment_service == 'diner' ? 'selected' : '' ?>>Dîner</option>
+                  <option value="milieu" <?= $entree->moment_service == 'milieu' ? 'selected' : '' ?>>Milieu</option>
+                  <option value="fin" <?= $entree->moment_service == 'fin' ? 'selected' : '' ?>>Fin</option>
+                </select>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-outline-secondary btn-sm toggle-note" data-target="note-<?= $entree->id ?>">
+                  📄 Voir la note
+                </button>
+              </div>
+            </div>
 
-      <div class="col">
-        <!-- 📝 Bouton pour ouvrir le modal -->
-        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#noteModal<?= $entree->id ?>">
-          Voir la note
-        </button>
-      </div>
-    </div>
-  </div>
+            <!-- 🔽 Bloc note masqué -->
+            <div id="note-<?= $entree->id ?>" class="note-content mt-2" style="display: none; background: #f9f9f9; padding: 10px; border-left: 3px solid #007bff;">
+              <?= nl2br(htmlspecialchars($entree->note)) ?>
+            </div>
+          </div>
+        <?php endforeach; ?>
 
-  <!-- 💬 MODAL de la note -->
-  <div class="modal fade" id="noteModal<?= $entree->id ?>" tabindex="-1" aria-labelledby="noteModalLabel<?= $entree->id ?>" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="noteModalLabel<?= $entree->id ?>">Note pour <?= $entree->nature ?></h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-        </div>
-        <div class="modal-body">
-          <p><?= nl2br(htmlspecialchars($entree->note)) ?></p>
-        </div>
-      </div>
-    </div>
-  </div>
-<?php endforeach; ?>
 
           <!-- ➕ NOUVELLES ENTRÉES -->
           <h3>Ajouter de nouvelles entrées</h3>
@@ -228,5 +212,24 @@ button {
               }
             });
 
+
+
       </script>
+
+      <script>
+        document.querySelectorAll('.toggle-note').forEach(function(button) {
+          button.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target');
+            const note = document.getElementById(targetId);
+            if (note.style.display === "none") {
+              note.style.display = "block";
+              this.innerText = "📄 Cacher la note";
+            } else {
+              note.style.display = "none";
+              this.innerText = "📄 Voir la note";
+            }
+          });
+        });
+      </script>
+
 
