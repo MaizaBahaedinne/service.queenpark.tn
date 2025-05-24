@@ -10,17 +10,18 @@
     <section class="content">
        <div class="row">
             <div class="col-lg-3 col-xs-6">
-             
+             <a href="<?php echo base_url() ?>Reservation/entree/<?php echo $reservationId ?>" >
               <div class="small-box bg-aqua">
                 <div class="inner">
-                  <h3>150</h3>
-                  <p>Entrées</p>
+                  <h3>Entrées</h3>
+                  <p></p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-log-in"></i>
                 </div>
                 <a href="<?php echo base_url() ?>Reservation/entree/<?php echo $reservationId ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
+              </a>
             </div>
             <div class="col-lg-3 col-xs-6">
              
