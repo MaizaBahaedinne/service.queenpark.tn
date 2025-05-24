@@ -93,7 +93,7 @@ class Reservation extends BaseController
                             redirect('/Reservation/entree/'.$reservationId); // redirection vers une liste ou autre vue
                         
                     }
-                }
+                
 
 
        
