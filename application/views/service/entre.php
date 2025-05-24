@@ -242,79 +242,71 @@ button {
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const rows = document.querySelectorAll('.entree-row');
-
-    if (!rows.length) {
-      console.warn('Aucune ligne .entree-row trouvée dans le DOM.');
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.entree-row').forEach(row => {
+    const id = row.dataset.id;
+    if (!id) {
+      console.warn("⚠️ Ligne sans data-id. Ignorée.");
       return;
     }
 
-    rows.forEach(row => {
-      // Sécurité : s'assurer que la ligne a un data-id
-      const id = row.dataset?.id;
-      if (!id) {
-        console.warn('⚠️ Ligne sans data-id. Ignorée.');
+    const quantiteInput = row.querySelector('.quantite-input');
+    const momentSelect = row.querySelector('.moment-select');
+    const btnConfirmer = row.querySelector('.btn-confirmer');
+
+    if (!quantiteInput || !momentSelect || !btnConfirmer) {
+      console.warn("❌ Élément manquant dans la ligne avec id", id);
+      return;
+    }
+
+    // Afficher le bouton quand on change la quantité
+    quantiteInput.addEventListener('input', () => {
+      btnConfirmer.style.display = 'inline-block';
+    });
+
+    // Envoi au clic
+    btnConfirmer.addEventListener('click', () => {
+      const quantite = parseInt(quantiteInput.value);
+      const moment_service = momentSelect.value;
+
+      if (isNaN(quantite) || quantite < 0 || moment_service === '') {
+        alert("⚠️ Veuillez entrer une quantité valide et choisir un moment de service.");
         return;
       }
 
-      const input = row.querySelector('.quantite-input');
-      const select = row.querySelector('.moment-select');
-      const bouton = row.querySelector('.btn-confirmer');
-
-      if (!input || !select || !bouton) {
-        console.warn('⚠️ Élément manquant dans une ligne. Vérifie HTML.');
-        return;
-      }
-
-      // Stocke le moment initial dans l'attribut data
-      select.dataset.initial = select.value;
-
-      const toggleBouton = () => {
-        const quantite = parseInt(input.value) || 0;
-        const momentModifie = select.value !== select.dataset.initial;
-        bouton.style.display = (quantite > 0 || momentModifie) ? 'inline-block' : 'none';
-      };
-
-      input.addEventListener('input', toggleBouton);
-      select.addEventListener('change', toggleBouton);
-
-      bouton.addEventListener('click', async () => {
-        const quantite = input.value;
-        const moment_service = select.value;
-
-        try {
-          const response = await fetch('<?= base_url("API/update_entree") ?>', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id, quantite, moment_service }),
-          });
-
-          if (!response.ok) throw new Error('Erreur serveur');
-
-          bouton.textContent = '✅ Enregistré';
-          bouton.classList.replace('btn-success', 'btn-secondary');
-
-          setTimeout(() => {
-            bouton.textContent = '✅ Confirmer';
-            bouton.classList.replace('btn-secondary', 'btn-success');
-            bouton.style.display = 'none';
-            input.value = '';
-            select.dataset.initial = moment_service;
-          }, 1500);
-        } catch (err) {
-          console.error('Erreur fetch:', err);
-          alert('Erreur lors de la mise à jour. Réessaie.');
+      fetch('<?= base_url("Reservation/update_entree") ?>', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: id,
+          quantite: quantite,
+          moment_service: moment_service
+        })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erreur serveur');
         }
+        return response.json();
+      })
+      .then(data => {
+        if (data.status === 'ok') {
+          alert("✅ Entrée mise à jour !");
+          btnConfirmer.style.display = 'none';
+          quantiteInput.value = '';
+        } else {
+          throw new Error("Erreur de mise à jour");
+        }
+      })
+      .catch(error => {
+        console.error("Erreur fetch:", error);
+        alert("❌ Une erreur est survenue.");
       });
-
-      // Initialisation à l'ouverture
-      toggleBouton();
     });
   });
+});
 </script>
+
 
 
 
