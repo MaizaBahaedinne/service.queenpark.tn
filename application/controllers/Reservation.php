@@ -43,7 +43,7 @@ class Reservation extends BaseController
         public function entree($reservation)
         {
                 $data['reservation'] = $this->reservation_model->ReservationInfo($reservation); 
-                $data['entree'] = $this->services_model->entreeListing($reservation); 
+                $data['entrees'] = $this->services_model->entreeListing($reservation); 
                 $this->global["pageTitle"] = "Les entrées pour la soirée";
                 $this->loadViews("service/entre", $this->global, $data , null);
         }
