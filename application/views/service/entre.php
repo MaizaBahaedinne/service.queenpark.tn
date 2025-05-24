@@ -86,47 +86,52 @@ button {
       <div class="col-lg-12 col-xs-12">
         <form method="post" action="<?php echo base_url() ?>/Reservation/addEntrees/<?php echo $reservation->reservationId ?>" class="form-style">
 
-        <h3>Entrées existantes</h3>
+          <!-- 🔁 ENTRÉES EXISTANTES -->
+          <h3>Entrées existantes</h3>
+          <?php foreach ($entrees as $entree) : ?>
+            <div class="entree-row old-entry" style="border:1px solid #ddd; padding:10px; margin-bottom:15px;">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h4><?= $entree->quantite ?></h4>
+                </div>
+                <div class="col">
+                  <input type="number" name="ajout_quantite[<?= $entree->entreeId ?>]" min="0" placeholder="Ajouter...">
+                </div>
+                <div class="col">
+                  <h4><?= htmlspecialchars($entree->nature) ?></h4>
+                </div>
+                <div class="col">
+                  <select name="moment_service_update[<?= $entree->entreeId ?>]" required>
+                    <option value="">-- Choisir --</option>
+                    <option value="debut" <?= $entree->moment_service == 'debut' ? 'selected' : '' ?>>Début</option>
+                    <option value="diner" <?= $entree->moment_service == 'diner' ? 'selected' : '' ?>>Dîner</option>
+                    <option value="milieu" <?= $entree->moment_service == 'milieu' ? 'selected' : '' ?>>Milieu</option>
+                    <option value="fin" <?= $entree->moment_service == 'fin' ? 'selected' : '' ?>>Fin</option>
+                  </select>
+                </div>
+                
+                <div class="col-auto">
+                  <button type="button" 
+                          class="btn btn-outline-secondary btn-sm toggle-note" 
+                          data-target="note-<?= $entree->entreeId ?>">
+                    Note
+                  </button>
+                </div>
+              </div>
 
-        <?php foreach ($entrees as $entree) : ?>
-          <div class="entree-row old-entry mb-3" data-id="<?= $entree->id ?>" style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">
-            <div class="row align-items-center">
-              <div class="col">
-                <h4><?= $entree->quantite ?>x</h4>
-              </div>
-              <div class="col">
-                <h4><?= ucfirst($entree->nature) ?></h4>
-              </div>
-              <div class="col">
-                <input type="number" min="0" class="form-control quantite-input" placeholder="Ajouter...">
-              </div>
-              <div class="col">
-                <select class="form-select moment-select" required>
-                  <option value="">-- Choisir --</option>
-                  <option value="debut" <?= $entree->moment_service == 'debut' ? 'selected' : '' ?>>Début</option>
-                  <option value="diner" <?= $entree->moment_service == 'diner' ? 'selected' : '' ?>>Dîner</option>
-                  <option value="milieu" <?= $entree->moment_service == 'milieu' ? 'selected' : '' ?>>Milieu</option>
-                  <option value="fin" <?= $entree->moment_service == 'fin' ? 'selected' : '' ?>>Fin</option>
-                </select>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-success btn-sm btn-confirmer" style="display: none;">
-                  ✅ Confirmer
-                </button>
-              </div>
-              <div class="col">
-                <button type="button" class="btn btn-outline-secondary btn-sm toggle-note" data-target="note-<?= $entree->id ?>">
-                  📄 Voir la note
-                </button>
+              <div id="note-<?= $entree->entreeId ?>" 
+                   class="note-content mt-2" 
+                   style="display:none; padding:10px; background:#f9f9f9; border:1px solid #ccc; border-radius:5px;">
+
+                <?php if($is_admin == 1): ?>
+                  <textarea name="note_update[<?= $entree->entreeId ?>]" rows="3" style="width:100%;"><?= htmlspecialchars($entree->note) ?></textarea>
+                <?php else: ?>
+                  <p style="margin:0; white-space:pre-wrap;"><?= nl2br(htmlspecialchars($entree->note)) ?: '<em>Aucune note</em>' ?></p>
+                <?php endif; ?>
+                
               </div>
             </div>
-
-            <!-- Bloc note masqué -->
-            <div id="note-<?= $entree->id ?>" class="note-content mt-2" style="display: none; background: #f9f9f9; padding: 10px; border-left: 3px solid #007bff;">
-              <?= nl2br(htmlspecialchars($entree->note)) ?>
-            </div>
-          </div>
-        <?php endforeach; ?>
+          <?php endforeach; ?>
 
 
 
