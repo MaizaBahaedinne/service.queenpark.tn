@@ -84,7 +84,7 @@ button {
   <section class="content">
     <div class="row">
       <div class="col-lg-12 col-xs-12">
-        <form method="post" action="<?php echo base_url() ?>/Reservation/addEntrees/<?php echo $reservation->reservationId ?>" class="form-style">
+        <form method="post" action="<?php echo base_url() ?>Reservation/addEntrees/<?php echo $reservation->reservationId ?>" class="form-style">
 
         <h3>Entrées existantes</h3>
 
