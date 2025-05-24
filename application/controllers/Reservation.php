@@ -51,14 +51,11 @@ class Reservation extends BaseController
 
         public function addEntrees($reservationId)
                 {
-                   
-                     
-                        
                             $reservationId = $reservationId ;
                             $quantites = $this->input->post('quantite');
                             $natures = $this->input->post('nature');
                             $moments = $this->input->post('moment_service');
-                            $notes = date('d/m/Y H:i:s');."Nouveau entrée par ".$this->name."<br>" ;
+                            $notes = " ------------------  ".date('d/m/Y H:i:s')." - Nouveau entrée par ".$this->name." ------------------  <br>" ;
 
                             $createdBy = $this->vendorId; // ou $this->session->userdata('userId');
                             $createdDTM = date('Y-m-d H:i:s');
