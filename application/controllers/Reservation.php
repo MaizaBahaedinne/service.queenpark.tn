@@ -91,6 +91,50 @@ class Reservation extends BaseController
                             redirect('/Reservation/entree/'.$reservationId); // redirection vers une liste ou autre vue
                         
                     }
+
+
+         public function update_entree() {
+                // On s'assure que c'est bien une requête AJAX POST
+                if ($this->input->method() !== 'post') {
+                    return $this->output
+                                ->set_status_header(405)
+                                ->set_output(json_encode(['error' => 'Method not allowed']));
+                }
+
+                // Récupérer les données JSON brutes envoyées par fetch()
+                $json = file_get_contents('php://input');
+                $data = json_decode($json, true);
+
+                // Validation simple
+                if (!isset($data['id'], $data['quantite'], $data['moment_service'])) {
+                    return $this->output
+                                ->set_status_header(400)
+                                ->set_output(json_encode(['error' => 'Données manquantes']));
+                }
+
+                $id = (int) $data['id'];
+                $quantite = (int) $data['quantite'];
+                $moment_service = $this->db->escape_str($data['moment_service']);
+
+                // Prépare les données à mettre à jour
+                $updateData = [
+                    'quantite' => $quantite,
+                    'moment_service' => $moment_service
+                ];
+
+                // Effectue la mise à jour via le modèle
+                $success = $this->Entree_model->update_entree($id, $updateData);
+
+                if ($success) {
+                    return $this->output
+                                ->set_content_type('application/json')
+                                ->set_output(json_encode(['success' => true]));
+                } else {
+                    return $this->output
+                                ->set_status_header(500)
+                                ->set_output(json_encode(['error' => 'Erreur lors de la mise à jour']));
+                }
+            }
                 
 
 
