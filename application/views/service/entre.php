@@ -89,7 +89,7 @@ button {
         <h3>Entrées existantes</h3>
 
         <?php foreach ($entrees as $entree) : ?>
-          <div class="entree-row old-entry mb-3" data-id="<?= $entree->id ?>" style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+          <div class="entree-row old-entry mb-3" data-id="<?= $entree->entreeid ?>" style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">
             <div class="row align-items-center">
               <div class="col">
                 <h4><?= $entree->quantite ?>x</h4>
