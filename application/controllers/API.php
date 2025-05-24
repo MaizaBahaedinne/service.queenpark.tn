@@ -10,8 +10,10 @@ require APPPATH . "/libraries/BaseController.php";
  * @version : 1.1
  * @since : 15 November 2016
  */
-class API extends CI_Controller
+class API extends REST_Controller
 {
+    
+
      public function __construct()
     {
         parent::__construct();
