@@ -78,7 +78,7 @@ class Reservation extends BaseController
                                         );
                                     }
                                 }
-                            }
+                            
 
                             if (!empty($dataToInsert)) {
                                 $result = $this->services_model->insertMultipleEntrees($dataToInsert);
