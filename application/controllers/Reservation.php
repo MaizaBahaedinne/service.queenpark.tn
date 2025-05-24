@@ -64,16 +64,19 @@ class Reservation extends BaseController
                             $dataToInsert = [];
 
                             for ($i = 0; $i < count($quantites); $i++) {
-                                if (trim($quantites[$i]) !== '') {
-                                    $dataToInsert[] = array(
-                                        'reservationId' => $reservationId,
-                                        'quantite' => $quantites[$i],
-                                        'nature' => $natures[$i],
-                                        'moment_service' => $moments[$i],
-                                        'note' => " ------------------  ".date('d/m/Y H:i:s')." - Nouveau entrée par ".$this->name." ------------------  <br>" ,
-                                        'createdBy' => $createdBy,
-                                        'createdDTM' => $createdDTM
-                                    );
+                                    if (trim($quantites[$i]) !== '') {
+                                        $note = "------------------  " . date('d/m/Y H:i:s') . "  Nouveau entrée par " . $this->name . " ------------------ <br>" .
+                                                "quantite : " . $quantites[$i] . "<br>" .
+                                                "nature : " . $natures[$i] . "<br>";
+
+                                        $dataToInsert[] = array(
+                                            'reservationId'   => $reservationId,
+                                            'quantite'        => $quantites[$i],
+                                            'nature'          => $natures[$i],
+                                            'moment_service'  => $moments[$i],
+                                            'note'            => $note
+                                        );
+                                    }
                                 }
                             }
 
@@ -120,6 +123,7 @@ class Reservation extends BaseController
                 $updateData = [
                     'quantite' => $quantite,
                     'moment_service' => $moment_service
+                    'note'  => .""
                 ];
 
                 // Effectue la mise à jour via le modèle
