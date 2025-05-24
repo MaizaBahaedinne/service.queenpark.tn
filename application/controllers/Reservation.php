@@ -70,7 +70,7 @@ class Reservation extends BaseController
                                         'quantite' => $quantites[$i],
                                         'nature' => $natures[$i],
                                         'moment_service' => $moments[$i],
-                                        'note' => $notes[$i],
+                                        'note' => " ------------------  ".date('d/m/Y H:i:s')." - Nouveau entrée par ".$this->name." ------------------  <br>" ,
                                         'createdBy' => $createdBy,
                                         'createdDTM' => $createdDTM
                                     );
