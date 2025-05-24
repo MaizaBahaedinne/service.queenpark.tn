@@ -19,6 +19,7 @@ class Reservation extends BaseController
         {
                 parent::__construct();
                 $this->load->model("reservation_model");
+                $this->load->model("services_model");
    
                 $this->isLoggedIn();
         }
@@ -45,6 +46,54 @@ class Reservation extends BaseController
                 $this->global["pageTitle"] = "Les entrées pour la soirée";
                 $this->loadViews("service/entre", $this->global, $data , null);
         }
+
+
+        public function addEntrees($reservationId)
+                {
+                   
+                     
+                        
+                            $reservationId = $reservationId ;
+                            $quantites = $this->input->post('quantite');
+                            $natures = $this->input->post('nature');
+                            $moments = $this->input->post('moment_service');
+                            $notes = $this->input->post('note');
+
+                            $createdBy = $this->vendorId; // ou $this->session->userdata('userId');
+                            $createdDTM = date('Y-m-d H:i:s');
+
+                            
+                            $dataToInsert = [];
+
+                            for ($i = 0; $i < count($quantites); $i++) {
+                                if (trim($quantites[$i]) !== '') {
+                                    $dataToInsert[] = array(
+                                        'reservationId' => $reservationId,
+                                        'quantite' => $quantites[$i],
+                                        'nature' => $natures[$i],
+                                        'moment_service' => $moments[$i],
+                                        'note' => $notes[$i],
+                                        'createdBy' => $createdBy,
+                                        'createdDTM' => $createdDTM
+                                    );
+                                }
+                            }
+
+                            if (!empty($dataToInsert)) {
+                                $result = $this->services_model->insertMultipleEntrees($dataToInsert);
+
+                                if ($result) {
+                                    $this->session->set_flashdata('success', 'Entrées ajoutées avec succès');
+                                } else {
+                                    $this->session->set_flashdata('error', 'Erreur lors de l’enregistrement');
+                                }
+                            } else {
+                                $this->session->set_flashdata('error', 'Aucune entrée valide');
+                            }
+                            redirect('/Reservation/entree/'.$reservationId); // redirection vers une liste ou autre vue
+                        
+                    }
+                }
 
 
        
