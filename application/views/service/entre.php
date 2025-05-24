@@ -91,10 +91,10 @@ button {
           <div class="entree-row old-entry mb-3" style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">
             <div class="row align-items-center">
               <div class="col">
-                <strong><?= $entree->quantite ?>x</strong>
+                <h4><?= $entree->quantite ?>x</h4>
               </div>
               <div class="col">
-                <h3 ><?= ucfirst($entree->nature) ?></h3>
+                <h4 ><?= ucfirst($entree->nature) ?></h4>
               </div>
               <div class="col">
                 <input type="number" name="ajout_quantite[<?= $entree->id ?>]" min="0" class="form-control" placeholder="Ajouter...">
