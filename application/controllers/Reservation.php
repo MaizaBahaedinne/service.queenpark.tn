@@ -58,7 +58,7 @@ class Reservation extends BaseController
                             $quantites = $this->input->post('quantite');
                             $natures = $this->input->post('nature');
                             $moments = $this->input->post('moment_service');
-                            $notes = $this->input->post('note');
+                            $notes = date('d/m/Y H:i:s');."Nouveau entrée par ".$this->name."<br>" ;
 
                             $createdBy = $this->vendorId; // ou $this->session->userdata('userId');
                             $createdDTM = date('Y-m-d H:i:s');
