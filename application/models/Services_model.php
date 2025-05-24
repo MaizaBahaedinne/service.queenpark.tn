@@ -47,7 +47,7 @@ class Services_model extends CI_Model
 
     public function insertMultipleEntrees($data)
 		{
-		    return $this->db->insert_batch('entrees', $data);
+		    return $this->db->insert_batch('tbl_services_entrees', $data);
 		}
     
 
