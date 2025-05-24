@@ -119,7 +119,9 @@ button {
                 ?>
                 <div class="col">
                   <label>Note</label>
-                  <input type="text" name="note_update[<?= $entree->id ?>]" value="<?= $entree->note ?>">
+                  <textarea type="text" name="note_update[<?= $entree->id ?>]">
+                    <?= $entree->note ?>
+                  </textarea>
                 </div>
                  <?php
                 }
@@ -152,8 +154,8 @@ button {
                   </select>
                 </div>
                 <div class="col">
-                  <label>Note</label>
-                  <input hidden type="text" name="note[]">
+                  
+                  <textarea hidden name="note[]"></textarea>
                 </div>
                 <div class="col delete-col">
                   <button type="button" class="remove-btn">X</button>
