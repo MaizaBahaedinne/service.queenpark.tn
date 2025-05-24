@@ -264,7 +264,11 @@ button {
       select.addEventListener('change', toggleBouton);
 
       bouton.addEventListener('click', async () => {
-        const id = row.dataset.id;
+        const id = row.dataset?.id;
+        if (!id) {
+          console.warn('Ligne sans ID détectée, vérifie ton HTML.');
+          return;
+        }
         const quantite = input.value;
         const moment_service = select.value;
 
