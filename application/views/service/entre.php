@@ -260,12 +260,12 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // Afficher le bouton quand on change la quantité
-    quantiteInput.addEventListener('input', () => {
-      btnConfirmer.style.display = 'inline-block';
-    });
+    // Affiche bouton si quantite ou moment change
+    const showBtn = () => { btnConfirmer.style.display = 'inline-block'; };
 
-    // Envoi au clic
+    quantiteInput.addEventListener('change', showBtn);
+    momentSelect.addEventListener('change', showBtn);
+
     btnConfirmer.addEventListener('click', () => {
       const quantite = parseInt(quantiteInput.value);
       const moment_service = momentSelect.value;
@@ -278,30 +278,26 @@ document.addEventListener('DOMContentLoaded', function () {
       fetch('<?= base_url("API/update_entree") ?>', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: id,
-          quantite: quantite,
-          moment_service: moment_service
-        })
+        body: JSON.stringify({ id, quantite, moment_service })
       })
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Erreur serveur');
-        }
+        if (!response.ok) throw new Error('Erreur serveur');
         return response.json();
       })
       .then(data => {
-        if (data.status === 'ok') {
+        if (data.success) {
           alert("✅ Entrée mise à jour !");
           btnConfirmer.style.display = 'none';
-          quantiteInput.value = '';
+          // Ne vide pas le champ, laisse l'utilisateur décider
+        } else if (data.error) {
+          throw new Error(data.error);
         } else {
-          throw new Error("Erreur de mise à jour");
+          throw new Error("Erreur de mise à jour inconnue");
         }
       })
       .catch(error => {
-        console.error("Erreur fetch:", error);
-        alert("❌ Une erreur est survenue.");
+        console.error("Erreur fetch:", error.message);
+        alert(`❌ Une erreur est survenue : ${error.message}`);
       });
     });
   });
