@@ -46,7 +46,7 @@ class API extends CI_Controller
             $update['moment_service'] = $moment_service;
         }
 
-        $entree = $this->Entree_model->getById($id);
+        $entree = $this->services_model->getById($id);
 
         if (!$entree) {
             echo json_encode(['error' => 'Entrée introuvable']);
@@ -56,7 +56,7 @@ class API extends CI_Controller
         $user = $this->session->userdata('name') ?? 'inconnu';
         $update['note'] = "MAJ par $user le ".date('d/m/Y H:i:s')."<br>".$entree['note'];
 
-        $this->Entree_model->update($id, $update);
+        $this->services_model->update($id, $update);
 
         echo json_encode(['success' => true]);
     }  
