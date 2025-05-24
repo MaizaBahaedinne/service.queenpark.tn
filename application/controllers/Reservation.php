@@ -123,7 +123,7 @@ class Reservation extends BaseController
                 $updateData = [
                     'quantite' => $quantite,
                     'moment_service' => $moment_service
-                    'note'  => .""
+                    
                 ];
 
                 // Effectue la mise à jour via le modèle
