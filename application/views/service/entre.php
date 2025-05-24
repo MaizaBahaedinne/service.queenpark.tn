@@ -92,19 +92,19 @@ button {
             <div class="entree-row old-entry">
               <div class="row">
                 <div class="col">
-                  <label>Quantité existante</label>
+                  
                   <h4><?= $entree->quantite ?></h4>
                 </div>
                 <div class="col">
-                  <label>Ajouter quantité</label>
+                  
                   <input type="number" name="ajout_quantite[<?= $entree->id ?>]" min="0" placeholder="Ajouter...">
                 </div>
                 <div class="col">
-                  <label>Nature</label>
+                  
                   <H4><?= $entree->nature ?></H4>
                 </div>
                 <div class="col">
-                  <label>Moment</label>
+                  
                   <select name="moment_service_update[<?= $entree->id ?>]" required>
                     <option value="">-- Choisir --</option>
                     <option value="debut" <?= $entree->moment_service == 'debut' ? 'selected' : '' ?>>Début</option>
@@ -113,10 +113,17 @@ button {
                     <option value="fin" <?= $entree->moment_service == 'fin' ? 'selected' : '' ?>>Fin</option>
                   </select>
                 </div>
+                <?php
+                if($is_admin == 1)
+                {
+                ?>
                 <div class="col">
                   <label>Note</label>
                   <input type="text" name="note_update[<?= $entree->id ?>]" value="<?= $entree->note ?>">
                 </div>
+                 <?php
+                }
+                ?>
               </div>
             </div>
           <?php endforeach; ?>
