@@ -77,8 +77,8 @@ button {
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-tachometer" aria-hidden="true"></i> Tableau de bord
-        <small>Queen Park Services</small>
+        <i class="fa fa-tachometer" aria-hidden="true"></i> Gestion des entrées 
+        <small>Ajout des entrée pour l'évenement de <?php echo $reservation->dateFin ?> à  <?php echo $reservation->salle ?> </small>
       </h1>
     </section>
      
