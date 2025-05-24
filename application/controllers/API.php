@@ -10,7 +10,7 @@ require APPPATH . "/libraries/BaseController.php";
  * @version : 1.1
  * @since : 15 November 2016
  */
-class Reservation extends BaseController
+class API extends BaseController
 {
         /**
          * This is default constructor of the class
@@ -21,33 +21,9 @@ class Reservation extends BaseController
                 $this->load->model("reservation_model");
                 $this->load->model("services_model");
    
-                $this->isLoggedIn();
+               
         }
        
-
-
-        /**
-         * This function used to load the first screen of the user
-         */
-        public function service($reservation)
-        {
-                $data['reservationId'] = $reservation ;
-                $this->global["pageTitle"] = "service pour l'evenement ".$reservation;
-                $this->loadViews("service/home", $this->global, $data , null);
-        }
-
-
-        /**
-         * This function used to load the first screen of the user
-         */
-        public function entree($reservation)
-        {
-                $data['reservation'] = $this->reservation_model->ReservationInfo($reservation); 
-                $data['entrees'] = $this->services_model->entreeListing($reservation); 
-                $this->global["pageTitle"] = "Les entrées pour la soirée";
-                $this->loadViews("service/entre", $this->global, $data , null);
-        }
-
 
        public function update_entree()
                 {
