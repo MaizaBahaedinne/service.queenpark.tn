@@ -68,11 +68,11 @@ class Services_model extends CI_Model
 
 
     public function getById($id) {
-        return $this->db->get_where('entrees', ['id' => $id])->row_array();
+        return $this->db->get_where('tbl_services_entrees', ['id' => $id])->row_array();
     }
 
     public function update($id, $data) {
-        return $this->db->where('id', $id)->update('entrees', $data);
+        return $this->db->where('id', $id)->update('tbl_services_entrees', $data);
     }
 
 
