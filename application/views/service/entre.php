@@ -289,6 +289,7 @@ document.addEventListener('DOMContentLoaded', function () {
           alert("✅ Entrée mise à jour !");
           btnConfirmer.style.display = 'none';
           // Ne vide pas le champ, laisse l'utilisateur décider
+          location.reload();
         } else if (data.error) {
           throw new Error(data.error);
         } else {
