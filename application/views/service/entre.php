@@ -87,21 +87,21 @@ button {
         <form method="post" action="<?php echo base_url() ?>/Reservation/addEntrees/<?php echo $reservation->reservationId ?>" class="form-style">
 
         <h3>Entrées existantes</h3>
+
         <?php foreach ($entrees as $entree) : ?>
-          <div class="entree-row old-entry mb-3" style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+          <div class="entree-row old-entry mb-3" data-id="<?= $entree->id ?>" style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">
             <div class="row align-items-center">
               <div class="col">
                 <h4><?= $entree->quantite ?>x</h4>
               </div>
               <div class="col">
-                <h4 ><?= ucfirst($entree->nature) ?></h4>
+                <h4><?= ucfirst($entree->nature) ?></h4>
               </div>
               <div class="col">
-                <input type="number" name="ajout_quantite[<?= $entree->id ?>]" min="0" class="form-control" placeholder="Ajouter...">
+                <input type="number" min="0" class="form-control quantite-input" placeholder="Ajouter...">
               </div>
-              
               <div class="col">
-                <select name="moment_service_update[<?= $entree->id ?>]" class="form-select" required>
+                <select class="form-select moment-select" required>
                   <option value="">-- Choisir --</option>
                   <option value="debut" <?= $entree->moment_service == 'debut' ? 'selected' : '' ?>>Début</option>
                   <option value="diner" <?= $entree->moment_service == 'diner' ? 'selected' : '' ?>>Dîner</option>
@@ -110,18 +110,25 @@ button {
                 </select>
               </div>
               <div class="col">
+                <button type="button" class="btn btn-success btn-sm btn-confirmer" style="display: none;">
+                  ✅ Confirmer
+                </button>
+              </div>
+              <div class="col">
                 <button type="button" class="btn btn-outline-secondary btn-sm toggle-note" data-target="note-<?= $entree->id ?>">
                   📄 Voir la note
                 </button>
               </div>
             </div>
 
-            <!-- 🔽 Bloc note masqué -->
+            <!-- Bloc note masqué -->
             <div id="note-<?= $entree->id ?>" class="note-content mt-2" style="display: none; background: #f9f9f9; padding: 10px; border-left: 3px solid #007bff;">
               <?= nl2br(htmlspecialchars($entree->note)) ?>
             </div>
           </div>
         <?php endforeach; ?>
+
+
 
 
           <!-- ➕ NOUVELLES ENTRÉES -->
@@ -231,6 +238,65 @@ button {
             }
           });
         });
+      </script>
+
+
+      <script>
+        
+        document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.entree-row').forEach(row => {
+    const input = row.querySelector('.quantite-input');
+    const select = row.querySelector('.moment-select');
+    const bouton = row.querySelector('.btn-confirmer');
+    const momentInitial = select.value;
+
+    // Fonction qui check si on doit afficher le bouton confirmer
+    const toggleBouton = () => {
+      const quantite = parseInt(input.value) || 0;
+      const momentModifie = select.value !== momentInitial;
+      bouton.style.display = (quantite > 0 || momentModifie) ? 'inline-block' : 'none';
+    };
+
+    input.addEventListener('input', toggleBouton);
+    select.addEventListener('change', toggleBouton);
+
+    bouton.addEventListener('click', async () => {
+      const id = row.dataset.id;
+      const quantite = input.value;
+      const moment_service = select.value;
+
+      try {
+        const response = await fetch('<?= base_url("entrees/update_ajax") ?>', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, quantite, moment_service })
+        });
+
+        if (!response.ok) throw new Error('Erreur serveur');
+
+        bouton.textContent = '✅ Enregistré';
+        bouton.classList.replace('btn-success', 'btn-secondary');
+
+        setTimeout(() => {
+          bouton.textContent = '✅ Confirmer';
+          bouton.classList.replace('btn-secondary', 'btn-success');
+          bouton.style.display = 'none';
+          input.value = '';
+          // Met à jour momentInitial après validation
+          // Sinon le bouton réapparaitra si on ne modifie pas le moment
+          select.dataset.initial = moment_service;
+        }, 1500);
+      } catch (err) {
+        alert('Erreur lors de la mise à jour, réessaye.');
+      }
+    });
+
+    // Initialisation pour que toggleBouton marche au chargement si besoin
+    toggleBouton();
+  });
+});
+
+
       </script>
 
 
