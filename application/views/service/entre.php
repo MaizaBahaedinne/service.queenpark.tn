@@ -244,57 +244,57 @@ button {
       <script>
         
         document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.entree-row').forEach(row => {
-    const input = row.querySelector('.quantite-input');
-    const select = row.querySelector('.moment-select');
-    const bouton = row.querySelector('.btn-confirmer');
-    const momentInitial = select.value;
+        document.querySelectorAll('.entree-row').forEach(row => {
+          const input = row.querySelector('.quantite-input');
+          const select = row.querySelector('.moment-select');
+          const bouton = row.querySelector('.btn-confirmer');
+          const momentInitial = select.value;
 
-    // Fonction qui check si on doit afficher le bouton confirmer
-    const toggleBouton = () => {
-      const quantite = parseInt(input.value) || 0;
-      const momentModifie = select.value !== momentInitial;
-      bouton.style.display = (quantite > 0 || momentModifie) ? 'inline-block' : 'none';
-    };
+          // Fonction qui check si on doit afficher le bouton confirmer
+          const toggleBouton = () => {
+            const quantite = parseInt(input.value) || 0;
+            const momentModifie = select.value !== momentInitial;
+            bouton.style.display = (quantite > 0 || momentModifie) ? 'inline-block' : 'none';
+          };
 
-    input.addEventListener('input', toggleBouton);
-    select.addEventListener('change', toggleBouton);
+          input.addEventListener('input', toggleBouton);
+          select.addEventListener('change', toggleBouton);
 
-    bouton.addEventListener('click', async () => {
-      const id = row.dataset.id;
-      const quantite = input.value;
-      const moment_service = select.value;
+          bouton.addEventListener('click', async () => {
+            const id = row.dataset.id;
+            const quantite = input.value;
+            const moment_service = select.value;
 
-      try {
-        const response = await fetch('<?= base_url("entrees/update_ajax") ?>', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id, quantite, moment_service })
+            try {
+              const response = await fetch('<?= base_url("entrees/update_ajax") ?>', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, quantite, moment_service })
+              });
+
+              if (!response.ok) throw new Error('Erreur serveur');
+
+              bouton.textContent = '✅ Enregistré';
+              bouton.classList.replace('btn-success', 'btn-secondary');
+
+              setTimeout(() => {
+                bouton.textContent = '✅ Confirmer';
+                bouton.classList.replace('btn-secondary', 'btn-success');
+                bouton.style.display = 'none';
+                input.value = '';
+                // Met à jour momentInitial après validation
+                // Sinon le bouton réapparaitra si on ne modifie pas le moment
+                select.dataset.initial = moment_service;
+              }, 1500);
+            } catch (err) {
+              alert('Erreur lors de la mise à jour, réessaye.');
+            }
+          });
+
+          // Initialisation pour que toggleBouton marche au chargement si besoin
+          toggleBouton();
         });
-
-        if (!response.ok) throw new Error('Erreur serveur');
-
-        bouton.textContent = '✅ Enregistré';
-        bouton.classList.replace('btn-success', 'btn-secondary');
-
-        setTimeout(() => {
-          bouton.textContent = '✅ Confirmer';
-          bouton.classList.replace('btn-secondary', 'btn-success');
-          bouton.style.display = 'none';
-          input.value = '';
-          // Met à jour momentInitial après validation
-          // Sinon le bouton réapparaitra si on ne modifie pas le moment
-          select.dataset.initial = moment_service;
-        }, 1500);
-      } catch (err) {
-        alert('Erreur lors de la mise à jour, réessaye.');
-      }
-    });
-
-    // Initialisation pour que toggleBouton marche au chargement si besoin
-    toggleBouton();
-  });
-});
+      });
 
 
       </script>
