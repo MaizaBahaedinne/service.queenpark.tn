@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      fetch('<?= base_url("Reservation/update_entree") ?>', {
+      fetch('<?= base_url("API/update_entree") ?>', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
