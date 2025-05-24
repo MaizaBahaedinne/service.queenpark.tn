@@ -94,7 +94,7 @@ button {
                 <strong><?= $entree->quantite ?>x</strong>
               </div>
               <div class="col">
-                <h3 class="badge bg-primary"><?= ucfirst($entree->nature) ?></h3>
+                <h3 ><?= ucfirst($entree->nature) ?></h3>
               </div>
               <div class="col">
                 <input type="number" name="ajout_quantite[<?= $entree->id ?>]" min="0" class="form-control" placeholder="Ajouter...">
