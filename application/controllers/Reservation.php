@@ -57,7 +57,7 @@ class Reservation extends BaseController
                 $data['reservation'] = $this->reservation_model->ReservationInfo($reservation); 
                 $data['entrees'] = $this->services_model->entreeListing($reservation); 
                 $this->global["pageTitle"] = "Les entrées pour la soirée";
-                $this->loadViews("service/entre", $this->global, $data , null);
+                $this->loadViews("service/sortie", $this->global, $data , null);
         }
 
 
