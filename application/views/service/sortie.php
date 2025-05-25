@@ -56,7 +56,7 @@
 <div class="content-wrapper">
   <section class="content-header">
     <h1>
-      <i class="fa fa-tachometer"></i> Gestion des sorties
+      <i class="fa fa-tachometer"></i> Gestion des retours
       <small>Ajout des retours pour l’évènement du <?php echo $reservation->dateFin ?> à <?php echo $reservation->salle ?></small>
     </h1>
   </section>
@@ -66,10 +66,10 @@
       <div class="col-lg-12 col-xs-12">
         <h3>Retours après consommation</h3>
 
-        <form method="post" action="<?php echo base_url() ?>Reservation/SortieDesarticle/<?php echo $reservation->reservationId ?>" class="form-style">
+        <form method="post" action="<?php echo base_url() ?>Reservation/addRetours/<?php echo $reservation->reservationId ?>" class="form-style">
           <?php foreach ($entrees as $entree) : ?>
             <div class="entree-row retour-entry mb-4 p-3">
-              <h5><?= $entree->quantite ?>x <?= ucfirst($entree->nature) ?> (<?= ucfirst($entree->moment_service) ?>)</h5>
+              <h4><?= $entree->quantite ?>x <?= ucfirst($entree->nature) ?> </h4>
 
               <input type="hidden" name="entree_id[]" value="<?= $entree->entreeId ?>">
 

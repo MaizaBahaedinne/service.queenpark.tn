@@ -28,7 +28,7 @@
              <a href="<?php echo base_url() ?>Reservation/sortie/<?php echo $reservationId ?>"  class="small-box bg-orange" >
               <div >
                 <div class="inner">
-                  <h3 style="color: white;">Retour</h3>
+                  <h3 style="color: white;">Retours</h3>
                   <p></p>
                 </div>
                 <div class="icon">

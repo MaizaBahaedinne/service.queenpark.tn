@@ -109,6 +109,39 @@ class Reservation extends BaseController
 
 
          
+         public function addRetours($reservationId)
+            {
+                $entreeIds = $this->input->post('entree_id');
+                $quantitesRetour = $this->input->post('quantite_consomme'); // ici tu peux renommer en quantite_retournee
+                $notes = $this->input->post('note_retour');
+
+                $createdBy = $this->vendorId; // ou $this->session->userdata('userId');
+                $createdDTM = date('Y-m-d H:i:s');
+
+                $dataToInsert = [];
+
+                for ($i = 0; $i < count($entreeIds); $i++) {
+                    if (isset($quantitesRetour[$i]) && trim($quantitesRetour[$i]) !== '') {
+                        $dataToInsert[] = array(
+                            'entreeId'         => $entreeIds[$i],
+                            'quantiteRetournee'=> (int)$quantitesRetour[$i],
+                            'noteRetour'       => htmlspecialchars($notes[$i]),
+                            'createdBy'        => $createdBy,
+                            'createdDTM'       => $createdDTM
+                        );
+                    }
+                }
+
+                if (!empty($dataToInsert)) {
+                    $this->services_model->insertMultipleRetours($dataToInsert);
+                    $this->session->set_flashdata('success', 'Retours enregistrés avec succès.');
+                } else {
+                    $this->session->set_flashdata('error', 'Aucun retour valide à enregistrer.');
+                }
+
+                redirect('/Reservation/sortie/'.$reservationId); // adapte si besoin
+            }
+
                 
 
 

@@ -76,5 +76,12 @@ class Services_model extends CI_Model
     }
 
 
+    public function insertMultipleRetours($data)
+        {
+            return $this->db->insert_batch('tbl_services_retours', $data);
+        }
+
+
+
 
 }
