@@ -25,14 +25,14 @@
             </div>
 
              <div class="col-lg-3 col-xs-6">
-             <a href="<?php echo base_url() ?>Reservation/sotie/<?php echo $reservationId ?>"  class="small-box bg-aqua" >
+             <a href="<?php echo base_url() ?>Reservation/sortie/<?php echo $reservationId ?>"  class="small-box bg-orange" >
               <div >
                 <div class="inner">
                   <h3 style="color: white;">Retour</h3>
                   <p></p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-log-in"></i>
+                  <i class="ion ion-log-out"></i>
                 </div>
                 <a href="<?php echo base_url() ?>Reservation/sotie/<?php echo $reservationId ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
