@@ -49,6 +49,18 @@ class Reservation extends BaseController
         }
 
 
+                /**
+         * This function used to load the first screen of the user
+         */
+        public function sortie($reservation)
+        {
+                $data['reservation'] = $this->reservation_model->ReservationInfo($reservation); 
+                $data['entrees'] = $this->services_model->entreeListing($reservation); 
+                $this->global["pageTitle"] = "Les entrées pour la soirée";
+                $this->loadViews("service/entre", $this->global, $data , null);
+        }
+
+
         public function addEntrees($reservationId)
                 {
                             $reservationId = $reservationId ;
