@@ -61,8 +61,9 @@
                 <th width="30%">Nature</th>
                 <th width="10%">Moment</th>
                 <th>Quantité d’entrée</th>
-                <th>Quantité retournée</th>
+                
                 <th>Consommée</th>
+                <th>Quantité retournée</th>
                 <th width="20%">Note</th>
               </tr>
             </thead>
@@ -72,8 +73,9 @@
                   <td><?= ucfirst($item->nature) ?></td>
                   <td><?= $item->moment_service ?></td>
                   <td><?= $item->quantite ?></td>
-                  <td><?= $item->quantiteRetournee ?></td>
+                  
                   <td><?= $item->quantite - $item->quantiteRetournee ?></td>
+                  <td><?= $item->quantiteRetournee ?></td>
                   <td><?= $item->noteRetour ?></td>
                 </tr>
               <?php endforeach; ?>
@@ -85,7 +87,7 @@
   <h3>Donnez votre avis</h3>
   
         <form method="post" action="<?php echo base_url('Reservation/saveFeedback/'.$reservation->reservationId) ?>" enctype="multipart/form-data" id="feedbackForm">
-
+          <br>
           <!-- Note Salle -->
           <label>Note pour la salle :</label>
           <div class="rating-stars" id="rating_salle">
@@ -104,7 +106,7 @@
             <input type="radio" id="salle1" name="rating_salle" value="1" />
             <label for="salle1" title="Nul">&#9733;</label>
           </div>
-
+          <br>
           <!-- Note Service -->
           <label>Note pour le service :</label>
           <div class="rating-stars" id="rating_service">
