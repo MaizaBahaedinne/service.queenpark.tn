@@ -59,8 +59,7 @@
 
               <div class="col-lg-12 col-xs-6">
                   <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
-                  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js'></script>
-
+                  
                   <div id='calendar'></div>
                   <script>
                     document.addEventListener('DOMContentLoaded', function() {

@@ -22,5 +22,7 @@
             y.addClass('active');
             y.parent().addClass('active');
     </script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js'></script>
+
   </body>
 </html>
