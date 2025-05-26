@@ -30,6 +30,24 @@ class Services extends CI_Controller {
 }
 
 
+public function delete_entree_calander() {
+  $data = json_decode(file_get_contents('php://input'), true);
+  $id = $data['id'] ?? null;
+  
+  if (!$id) {
+    echo json_encode(['success' => false, 'message' => 'ID manquant']);
+    return;
+  }
+  
+  // Mettre heurePrevu à NULL dans la BDD pour cet id
+  $this->db->set('heurePrevu', null);
+  $this->db->where('id', $id);
+  $updated = $this->db->update('entrees');
+  
+  echo json_encode(['success' => $updated]);
+}
+
+
 
 }
 
