@@ -53,7 +53,7 @@ class Services_model extends CI_Model
 
     public function retourListing($reservationId)
     {
-        $this->db->select('r.*, e.nature, e.quantite');
+        $this->db->select('r.*, e.*');
         $this->db->from('tbl_services_retours r');
         $this->db->join('tbl_services_entrees e', 'e.entreeId = r.entreeId', 'left');
         $this->db->where('e.reservationId', $reservationId);
