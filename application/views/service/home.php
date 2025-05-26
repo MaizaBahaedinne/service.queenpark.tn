@@ -1,3 +1,34 @@
+<style>
+  #event-list {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    min-height: 100px;
+    border: 2px dashed #dee2e6;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .fc-event {
+    padding: 8px 12px;
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 0.3rem;
+    cursor: grab;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.1s ease;
+  }
+
+  .fc-event:hover {
+    transform: scale(1.03);
+    background-color: #0b5ed7;
+  }
+</style>
+
+
+
 <div class="content-wrapper">
   <section class="content-header">
     <h1>
@@ -134,6 +165,9 @@
       height: 'auto',
       slotMinTime: '<?php echo $reservation->heureDebut ;?>:00',
       slotMaxTime: '<?php echo $reservation->heureFin ;?>:00',
+      slotDuration: '00:15:00',        // ⏱️ pas de 15 minutes
+      slotLabelInterval: '00:15:00',   // 🕓 affiche les heures toutes les 15 min
+
       events: '/Services/get_entrees_calander/<?= $reservation->reservationId ?>',
 
       eventReceive: function (info) {
