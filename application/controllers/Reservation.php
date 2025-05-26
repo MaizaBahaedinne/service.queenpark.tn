@@ -112,7 +112,7 @@ class Reservation extends BaseController
          public function addRetours($reservationId)
             {
                 $entreeIds = $this->input->post('entree_id');
-                $quantitesRetour = $this->input->post('quantite_consomme'); // ici tu peux renommer en quantite_retournee
+                $quantitesRetour = $this->input->post('quantite_retour'); // ici tu peux renommer en quantite_retournee
                 $notes = $this->input->post('note_retour');
 
                 $createdBy = $this->vendorId; // ou $this->session->userdata('userId');
