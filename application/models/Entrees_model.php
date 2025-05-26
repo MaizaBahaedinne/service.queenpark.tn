@@ -21,7 +21,7 @@ class Entrees_model extends CI_Model {
                 'id'    => $row->entreeId,
                 'title' => $row->nature . ' x' . $row->quantite,
                 'start' => $row->heurePrevu,
-                'end'   => date('Y-m-d H:i:s', strtotime($row->heurePrevu) + 3600),
+                'end'   => date('Y-m-d H:i:s', strtotime($row->heurePrevu) + 1800),
             ];
         }
 

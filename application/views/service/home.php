@@ -66,7 +66,19 @@
       <!-- CALENDRIER -->
       <div class="col-lg-12 col-xs-12">
         <h3><i class="fa fa-calendar"></i> Planning de la réservation</h3>
-        <div id="calendar"></div>
+        <div style="display: flex; gap: 20px;">
+          <!-- Calendrier -->
+          <div id="calendar" style="flex: 1;"></div>
+
+          <!-- Liste des événements non planifiés -->
+          <div id="external-events" style="width: 300px;">
+            <h4>Entrées à planifier</h4>
+            <div id="event-list">
+              <!-- Les éléments à dragger seront injectés ici -->
+            </div>
+          </div>
+      </div>
+
       </div>
 
     </div>
@@ -74,50 +86,45 @@
 </div>
 
 <!-- FullCalendar (en bas de page ou dans le <head> si possible) -->
+
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales/fr.js"></script>
+
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const calendarEl = document.getElementById('calendar');
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'timeGridDay',
-      editable: true,
-      height: 'auto',
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+  initialView: 'timeGridDay',
+  editable: true,
+  height: 'auto',
+  locale: 'fr', // ← Voilà l'option magique 🪄
 
-      // Tu peux personnaliser ici avec les horaires/dates spécifiques
-       slotMinTime: '<?php echo $reservation->heureDebut ;?>:00',
-       slotMaxTime: '<?php echo $reservation->heureFin ;?>:00',
-      // validRange: {
-      //   start: '2025-05-30',
-      //   end: '2025-05-31'
-      // },
+  slotMinTime: '<?php echo $reservation->heureDebut ;?>:00',
+  slotMaxTime: '<?php echo $reservation->heureFin ;?>:00',
 
-      events: '/services/get_entrees_calander',
-      eventDrop: function (info) {
-        fetch('/services/update_entree_calander', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: info.event.id,
-            start: info.event.start.toISOString(),
-            end: info.event.end ? info.event.end.toISOString() : null
-          })
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (!data.success) {
-            alert('Erreur lors de la mise à jour.');
-            info.revert();
-          }
-        })
-        .catch(() => {
-          alert('Erreur serveur.');
-          info.revert();
-        });
+  events: '/Services/get_entrees_calander',
+  eventDrop: function (info) {
+    fetch('/Services/update_entree_calander', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: info.event.id,
+        start: info.event.start.toISOString(),
+        end: info.event.end ? info.event.end.toISOString() : null
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success) {
+        alert('Erreur lors de la mise à jour.');
+        info.revert();
       }
+    })
+    .catch(() => {
+      alert('Erreur serveur.');
+      info.revert();
     });
+  }
+});
 
-    calendar.render();
-  });
 </script>
