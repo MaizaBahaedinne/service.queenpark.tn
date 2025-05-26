@@ -79,6 +79,10 @@ class Services_model extends CI_Model
             return $this->db->insert_batch('tbl_services_retours', $data);
         }
 
+    public function insertFeedback($data)
+    {
+        return $this->db->insert('tbl_services_feedbacks', $data);
+    }
 
 
 

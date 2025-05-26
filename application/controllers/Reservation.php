@@ -155,6 +155,45 @@ class Reservation extends BaseController
             }
 
                 
+            public function saveFeedback($reservationId)
+            {
+                $ratingSalle = $this->input->post('rating_salle');
+                $ratingService = $this->input->post('rating_service');
+                $photoBase64 = $this->input->post('photo_base64');
+                $createdBy = $this->session->userdata('userId') ?? 0;
+                $createdDTM = date('Y-m-d H:i:s');
+
+                // Nettoyage et validation simple
+                $ratingSalle = intval($ratingSalle);
+                $ratingService = intval($ratingService);
+
+                // On veut garder uniquement la base64 sans le prefix "data:image/jpeg;base64,"
+                $photoData = null;
+                if ($photoBase64 && preg_match('/^data:image\/jpeg;base64,/', $photoBase64)) {
+                    $photoData = substr($photoBase64, strpos($photoBase64, ',') + 1);
+                }
+
+                $dataToInsert = [
+                    'reservationId'   => $reservationId,
+                    'note_salle'      => $ratingSalle,
+                    'note_service'    => $ratingService,
+                    'photo_user'      => $photoData, // stocké en base64 (texte long)
+                    'createdBy'       => $createdBy,
+                    'createdDTM'      => $createdDTM
+                ];
+
+                $this->load->model('services_model');
+                $result = $this->services_model->insertFeedback($dataToInsert);
+
+                if ($result) {
+                    $this->session->set_flashdata('success', 'Merci pour votre retour !');
+                } else {
+                    $this->session->set_flashdata('error', 'Erreur lors de l’enregistrement.');
+                }
+
+                redirect('/Reservation/satisfaction/'.$reservationId);
+            }
+
 
 
        
