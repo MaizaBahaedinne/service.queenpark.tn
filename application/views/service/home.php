@@ -54,7 +54,7 @@
               </a>
             </div>    
              <div class="col-lg-12 col-xs-6">
-              <a href="<?php echo base_url() ?>Reservation/sotie/<?php echo $reservationId ?>">rapport finale</a>
+              <a href="<?php echo base_url() ?>Reservation/afficherFeedback/<?php echo $reservationId ?>">rapport finale</a>
              </div>       
             
            
