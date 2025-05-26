@@ -129,6 +129,11 @@
           <!-- Champ caché pour la photo en base64 -->
           <input type="hidden" name="photo_base64" id="photo_base64" />
           <br>
+          <label>Nom et prénom</label>
+          <input type="text" name="nom" required>
+          <br>
+          <label>Reclamation</label>
+          <textarea type="text" name="commentaire" required>
           <button type="submit" class="btn btn-primary">Envoyer mon avis</button>
         </form>
 
