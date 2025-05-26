@@ -74,7 +74,7 @@
 
             $quantite_retour = isset($retourExistant->quantite_retour) ? $retourExistant->quantite_retour : '';
 
-            $note_retour = $retourExistant ? htmlspecialchars($retourExistant->note_retour) : '';
+            $note_retour = isset($retourExistant->note_retour) ? htmlspecialchars($retourExistant->note_retour) : '';
             $readonly = $retourExistant !== null; // Si un retour existe, c’est readonly
           ?>
 
