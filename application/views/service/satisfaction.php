@@ -128,7 +128,7 @@
 
           <!-- Champ caché pour la photo en base64 -->
           <input type="hidden" name="photo_base64" id="photo_base64" />
-
+          <br>
           <button type="submit" class="btn btn-primary">Envoyer mon avis</button>
         </form>
 

@@ -174,6 +174,9 @@ class Reservation extends BaseController
                 $photoBase64 = $this->input->post('photo_base64');
                 $createdBy = $this->session->userdata('userId') ?? 0;
                 $createdDTM = date('Y-m-d H:i:s');
+                $commentaire = $this->input->post('commentaire'); 
+                $nom = $this->input->post('nom'); 
+
 
                 // Nettoyage et validation simple
                 $ratingSalle = intval($ratingSalle);
@@ -190,6 +193,8 @@ class Reservation extends BaseController
                     'note_salle'      => $ratingSalle,
                     'note_service'    => $ratingService,
                     'photo_user'      => $photoData, // stocké en base64 (texte long)
+                    'nom'             => $nom, 
+                    'commentaire'     => $commentaire, 
                     'createdBy'       => $createdBy,
                     'createdDTM'      => $createdDTM
                 ];
