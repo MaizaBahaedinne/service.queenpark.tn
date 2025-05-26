@@ -67,7 +67,7 @@ class Reservation extends BaseController
         {
                 $data['reservation'] = $this->reservation_model->ReservationInfo($reservation);
                 $data['entrees'] = $this->services_model->entreeListing($reservation);
-                $data['retours'] = $this->services_model->retourListing($reservation);
+                $data['rapport'] = $this->services_model->retourListing($reservation);
 
                 $this->global["pageTitle"] = "Rapport final de la réservation";
                 $this->loadViews("service/satisfaction", $this->global, $data, null);
