@@ -7,7 +7,6 @@
     max-width: 1000px;
     margin: auto;
   }
-
   .entree-row {
     border: 1px solid #ccc;
     padding: 15px;
@@ -15,36 +14,19 @@
     border-radius: 8px;
     background-color: #fafafa;
   }
-
-  .row {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .col {
-    flex: 1;
-    min-width: 150px;
-    display: flex;
-    flex-direction: column;
-  }
-
   input, select, button, textarea {
     padding: 8px;
     margin-top: 5px;
     font-size: 14px;
   }
-
   button {
     cursor: pointer;
   }
-
   .form-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
   }
-
   .btn-primary {
     background-color: #007bff;
     border: none;
@@ -57,7 +39,7 @@
   <section class="content-header">
     <h1>
       <i class="fa fa-tachometer"></i> Gestion des retours
-      <small>Ajout des retours pour l’évènement du <?php echo $reservation->dateFin ?> à <?php echo $reservation->salle ?></small>
+      <small>Ajout des retours pour l’évènement du <?= $reservation->dateFin ?> à <?= $reservation->salle ?></small>
     </h1>
   </section>
 
@@ -65,39 +47,65 @@
     <div class="row">
       <div class="col-lg-12 col-xs-12">
         <h3>Retours après consommation</h3>
-              <?php if ($this->session->flashdata('success')): ?>
-        <div class="alert alert-success">
-          <?= $this->session->flashdata('success') ?>
-        </div>
-      <?php endif; ?>
 
-      <?php if ($this->session->flashdata('error')): ?>
-        <div class="alert alert-danger">
-          <?= $this->session->flashdata('error') ?>
-        </div>
-      <?php endif; ?>
+        <?php if ($this->session->flashdata('success')): ?>
+          <div class="alert alert-success">
+            <?= $this->session->flashdata('success') ?>
+          </div>
+        <?php endif; ?>
 
-        <form method="post" action="<?php echo base_url() ?>Reservation/addRetours/<?php echo $reservation->reservationId ?>" class="form-style">
-          <?php foreach ($entrees as $entree) : ?>
+        <?php if ($this->session->flashdata('error')): ?>
+          <div class="alert alert-danger">
+            <?= $this->session->flashdata('error') ?>
+          </div>
+        <?php endif; ?>
+
+        <form method="post" action="<?= base_url("Reservation/addRetours/{$reservation->reservationId}") ?>" class="form-style">
+          
+          <?php foreach ($entrees as $entree): 
+            // Trouver retour existant
+            $retourExistant = null;
+            foreach ($retours as $retour) {
+              if ($retour->entreeId == $entree->entreeId) {
+                $retourExistant = $retour;
+                break;
+              }
+            }
+          ?>
             <div class="entree-row retour-entry mb-4 p-3">
-              <h4><?= $entree->quantite ?>x <?= ucfirst($entree->nature) ?> </h4>
+              <h4><?= $entree->quantite ?>x <?= ucfirst($entree->nature) ?></h4>
 
               <input type="hidden" name="entree_id[]" value="<?= $entree->entreeId ?>">
 
               <div class="mb-2">
                 <label>Quantité retournée :</label>
-                <input type="number" name="quantite_retour[]" min="0" max="<?= $entree->quantite ?>" min="0" class="form-control" required>
+                <input
+                  type="number"
+                  name="quantite_retour[]"
+                  min="0"
+                  max="<?= $entree->quantite ?>"
+                  class="form-control"
+                  required
+                  value="<?= $retourExistant ? $retourExistant->quantite_retour : '' ?>"
+                  <?= $retourExistant ? 'readonly' : '' ?>
+                >
                 <small class="text-muted">Indique combien n’a pas été utilisé</small>
               </div>
 
               <div class="mb-2">
                 <label>Note / Commentaire :</label>
-                <textarea name="note_retour[]" class="form-control" rows="2" placeholder="Ex : Renvoyé, pas utilisé, etc."></textarea>
+                <textarea
+                  name="note_retour[]"
+                  class="form-control"
+                  rows="2"
+                  placeholder="Ex : Renvoyé, pas utilisé, etc."
+                  <?= $retourExistant ? 'readonly' : '' ?>
+                ><?= $retourExistant ? htmlspecialchars($retourExistant->note_retour) : '' ?></textarea>
               </div>
             </div>
           <?php endforeach; ?>
 
-          <button type="submit" class="btn btn-primary">Enregistrer </button>
+          <button type="submit" class="btn btn-primary" <?= !empty($retours) ? 'disabled' : '' ?>>Enregistrer</button>
         </form>
       </div>
     </div>
