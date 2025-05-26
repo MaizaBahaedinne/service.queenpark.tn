@@ -24,14 +24,20 @@
   }
   .form-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-top: 20px;
   }
   .btn-primary {
     background-color: #007bff;
     border: none;
+    color: white;
     padding: 10px 20px;
     font-size: 16px;
+    border-radius: 6px;
+  }
+  .btn-primary:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
   }
 </style>
 
@@ -62,8 +68,9 @@
 
         <form method="post" action="<?= base_url("Reservation/addRetours/{$reservation->reservationId}") ?>" class="form-style">
           
+          <?php $allReadonly = true; ?>
+
           <?php foreach ($entrees as $entree): 
-            // Trouver retour existant
             $retourExistant = null;
             foreach ($retours as $retour) {
               if ($retour->entreeId == $entree->entreeId) {
@@ -72,12 +79,15 @@
               }
             }
 
-            // On sécurise les données même si elles n'existent pas
             $quantite_retour = isset($retourExistant->quantite_retour) ? $retourExistant->quantite_retour : '';
             $note_retour = isset($retourExistant->note_retour) ? htmlspecialchars($retourExistant->note_retour) : '';
-            $readonly = isset($retourExistant->quantite_retour); // Présence = déjà rempli = readonly
+            $readonly = isset($retourExistant->quantite_retour);
+
+            if (!$readonly) {
+              $allReadonly = false;
+            }
           ?>
-            <div class="entree-row retour-entry mb-4 p-3">
+            <div class="entree-row retour-entry">
               <h4><?= $entree->quantite ?>x <?= ucfirst($entree->nature) ?></h4>
 
               <input type="hidden" name="entree_id[]" value="<?= $entree->entreeId ?>">
@@ -110,6 +120,11 @@
             </div>
           <?php endforeach; ?>
 
+          <div class="form-buttons">
+            <button type="submit" class="btn btn-primary" <?= $allReadonly ? 'disabled' : '' ?>>
+              Enregistrer
+            </button>
+          </div>
         </form>
       </div>
     </div>
