@@ -49,35 +49,30 @@
         <h3>Retours après consommation</h3>
 
         <?php if ($this->session->flashdata('success')): ?>
-          <div class="alert alert-success">
-            <?= $this->session->flashdata('success') ?>
-          </div>
+          <div class="alert alert-success"><?= $this->session->flashdata('success') ?></div>
         <?php endif; ?>
 
         <?php if ($this->session->flashdata('error')): ?>
-          <div class="alert alert-danger">
-            <?= $this->session->flashdata('error') ?>
-          </div>
+          <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
         <?php endif; ?>
 
         <form method="post" action="<?= base_url("Reservation/addRetours/{$reservation->reservationId}") ?>" class="form-style">
-
+          
           <?php foreach ($entrees as $entree): 
+            // Cherche un retour existant pour cette entrée
             $retourExistant = null;
-
             foreach ($retours as $retour) {
-              if ((int)$retour->entreeId === (int)$entree->entreeId) {
+              if ($retour->entreeId == $entree->entreeId) {
                 $retourExistant = $retour;
                 break;
               }
             }
 
+            // Récupère les données avec sécurité
             $quantite_retour = isset($retourExistant->quantite_retour) ? $retourExistant->quantite_retour : '';
-
             $note_retour = isset($retourExistant->note_retour) ? htmlspecialchars($retourExistant->note_retour) : '';
-            $readonly = $retourExistant !== null; // Si un retour existe, c’est readonly
+            $readonly = $quantite_retour !== ''; // si une valeur existe, on bloque
           ?>
-
             <div class="entree-row retour-entry mb-4 p-3">
               <h4><?= $entree->quantite ?>x <?= ucfirst($entree->nature) ?></h4>
 
@@ -109,13 +104,11 @@
                 ><?= $note_retour ?></textarea>
               </div>
             </div>
-
           <?php endforeach; ?>
 
           <div class="form-buttons">
             <button type="submit" class="btn btn-primary">Enregistrer les retours</button>
           </div>
-
         </form>
       </div>
     </div>
