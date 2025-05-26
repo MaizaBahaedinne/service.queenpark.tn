@@ -78,24 +78,23 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 <script>
-  <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const calendrierEl = document.getElementById('calendar');
-    const calendrier = new FullCalendar.Calendar(calendrierEl, {
-      initialView: 'timeGridWeek', // Vue initiale : semaine en grille horaire
-      editable: true,              // Les événements peuvent être déplacés
-      height: 'auto',              // Hauteur automatique
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'timeGridWeek',
+      editable: true,
+      height: 'auto',
 
-      // Tu peux personnaliser ici avec des horaires ou des dates spécifiques
-      // slotMinTime: '08:00:00',  // Heure minimale affichée
-      // slotMaxTime: '20:00:00',  // Heure maximale affichée
-      // validRange: {            // Plage de dates valides
+      // Tu peux personnaliser ici avec les horaires/dates spécifiques
+       slotMinTime: '<?php echo $reservation->heureDebut ;?>:00',
+       slotMaxTime: '<?php echo $reservation->heureFin ;?>:00',
+      // validRange: {
       //   start: '2025-05-30',
       //   end: '2025-05-31'
       // },
 
-      events: '/services/get_entrees_calander', // Source des événements
-      eventDrop: function (info) { // Quand un événement est déplacé
+      events: '/services/get_entrees_calander',
+      eventDrop: function (info) {
         fetch('/services/update_entree_calander', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -109,18 +108,16 @@
         .then(data => {
           if (!data.success) {
             alert('Erreur lors de la mise à jour.');
-            info.revert(); // Revenir en arrière si erreur
+            info.revert();
           }
         })
         .catch(() => {
           alert('Erreur serveur.');
-          info.revert(); // Revenir en arrière si erreur réseau
+          info.revert();
         });
       }
     });
 
-    calendrier.render(); // Afficher le calendrier
+    calendar.render();
   });
-</script>
-
 </script>
