@@ -60,6 +60,18 @@ class Reservation extends BaseController
                 $this->loadViews("service/sortie", $this->global, $data , null);
         }
 
+                /**
+         * This function used to load the first screen of the user
+         */
+        public function satisfaction($reservation)
+        {
+                $data['reservation'] = $this->reservation_model->ReservationInfo($reservationId);
+                $data['entrees'] = $this->services_model->entreeListing($reservationId);
+                $data['retours'] = $this->services_model->retourListing($reservationId);
+
+                $this->global["pageTitle"] = "Rapport final de la réservation";
+                $this->loadViews("service/rapport", $this->global, $data, null);
+        }
 
         public function addEntrees($reservationId)
                 {
