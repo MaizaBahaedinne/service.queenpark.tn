@@ -52,7 +52,10 @@
                 <a href="<?php echo base_url() ?>Reservation/sotie/<?php echo $reservationId ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
               </a>
-            </div>           
+            </div>    
+             <div class="col-lg-4 col-xs-6">
+              <a href="<?php echo base_url() ?>Reservation/sotie/<?php echo $reservationId ?>"> rapport finale</a>
+             </div>       
             
            
           </div>  
