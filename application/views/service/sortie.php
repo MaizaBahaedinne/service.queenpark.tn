@@ -75,7 +75,7 @@
 
               <div class="mb-2">
                 <label>Quantité retournée :</label>
-                <input type="number" name="quantite_retour[]" min="0" max="<?= $entree->quantite ?>" class="form-control" required>
+                <input type="number" name="quantite_retour[]" min="0" max="<?= $entree->quantite ?>" min="0" class="form-control" required>
                 <small class="text-muted">Indique combien n’a pas été utilisé</small>
               </div>
 
@@ -86,7 +86,7 @@
             </div>
           <?php endforeach; ?>
 
-          <button type="submit" class="btn btn-primary">💾 Enregistrer les retours</button>
+          <button type="submit" class="btn btn-primary">Enregistrer </button>
         </form>
       </div>
     </div>
