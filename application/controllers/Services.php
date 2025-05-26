@@ -23,6 +23,14 @@ class Services extends CI_Controller {
             echo json_encode(['success' => false, 'message' => 'Paramètres manquants.']);
         }
     }
+
+    public function get_entrees_non_planifiees() {
+    $events = $this->Entrees_model->get_non_planifiees();
+    echo json_encode($events);
+}
+
+
+
 }
 
 

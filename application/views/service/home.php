@@ -92,38 +92,95 @@
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales/fr.global.min.js"></script>
 <script>
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-  initialView: 'timeGridDay',
-  editable: true,
-  height: 'auto',
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+    const eventList = document.getElementById('event-list');
 
-  slotMinTime: '<?php echo $reservation->heureDebut ;?>:00',
-  slotMaxTime: '<?php echo $reservation->heureFin ;?>:00',
+    // Charger les événements non planifiés
+    fetch('/Services/get_entrees_non_planifiees')
+      .then(res => res.json())
+      .then(events => {
+        events.forEach(event => {
+          const el = document.createElement('div');
+          el.innerText = event.title;
+          el.classList.add('fc-event');
+          el.setAttribute('data-id', event.id);
+          el.setAttribute('data-title', event.title);
+          el.setAttribute('draggable', true);
+          eventList.appendChild(el);
+        });
 
-  events: '/Services/get_entrees_calander',
-  eventDrop: function (info) {
-    fetch('/Services/update_entree_calander', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id: info.event.id,
-        start: info.event.start.toISOString(),
-        end: info.event.end ? info.event.end.toISOString() : null
-      })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (!data.success) {
-        alert('Erreur lors de la mise à jour.');
-        info.revert();
+        new FullCalendar.Draggable(eventList, {
+          itemSelector: '.fc-event',
+          eventData: function (el) {
+            return {
+              id: el.getAttribute('data-id'),
+              title: el.getAttribute('data-title'),
+              duration: '00:30'
+            };
+          }
+        });
+      });
+
+    // Initialiser le calendrier
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      locale: 'fr',
+      initialView: 'timeGridDay',
+      editable: true,
+      droppable: true,
+      height: 'auto',
+      slotMinTime: '<?php echo $reservation->heureDebut ;?>:00',
+      slotMaxTime: '<?php echo $reservation->heureFin ;?>:00',
+      events: '/Services/get_entrees_calander/<?= $reservation->reservationId ?>',
+
+      eventReceive: function (info) {
+        const id = info.event.id;
+        const start = info.event.start.toISOString();
+
+        fetch('/Services/update_entree_calander', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, start })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (!data.success) {
+            alert("Erreur serveur !");
+            info.revert();
+          }
+        })
+        .catch(() => {
+          alert("Erreur réseau !");
+          info.revert();
+        });
+      },
+
+      eventDrop: function (info) {
+        const id = info.event.id;
+        const start = info.event.start.toISOString();
+
+        fetch('/Services/update_entree_calander', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, start })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (!data.success) {
+            alert("Erreur serveur !");
+            info.revert();
+          }
+        })
+        .catch(() => {
+          alert("Erreur réseau !");
+          info.revert();
+        });
       }
-    })
-    .catch(() => {
-      alert('Erreur serveur.');
-      info.revert();
     });
-  }
-});
 
+    calendar.render();
+  });
 </script>
