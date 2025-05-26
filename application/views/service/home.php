@@ -68,7 +68,7 @@
         <h3><i class="fa fa-calendar"></i> Planning de la réservation</h3>
         <div style="display: flex; gap: 20px;">
           <!-- Calendrier -->
-          <div id="calendar" style="flex: 1;"></div>
+          <div id="calendarEl" style="flex: 1;"></div>
 
           <!-- Liste des événements non planifiés -->
           <div id="external-events" style="width: 300px;">
