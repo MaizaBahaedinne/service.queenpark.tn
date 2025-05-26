@@ -43,15 +43,15 @@
       <div class="col-lg-12 col-xs-12">
 
           <h2>Rapport d'utilisation</h2>
-          <table class="table table-bordered">
+          <table class="table table-bordered" >
             <thead>
               <tr>
-                <th>Nature</th>
-                <th>Moment</th>
-                <th>Quantité prévue</th>
+                <th width="30%">Nature</th>
+                <th width="10%">Moment</th>
+                <th>Quantité d’entrée</th>
                 <th>Quantité retournée</th>
                 <th>Consommée</th>
-                <th>Note</th>
+                <th width="20%">Note</th>
               </tr>
             </thead>
             <tbody>
