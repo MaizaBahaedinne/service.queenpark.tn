@@ -78,23 +78,24 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 <script>
+  <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const calendarEl = document.getElementById('calendar');
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'timeGridWeek',
-      editable: true,
-      height: 'auto',
+    const calendrierEl = document.getElementById('calendar');
+    const calendrier = new FullCalendar.Calendar(calendrierEl, {
+      initialView: 'timeGridWeek', // Vue initiale : semaine en grille horaire
+      editable: true,              // Les événements peuvent être déplacés
+      height: 'auto',              // Hauteur automatique
 
-      // Tu peux personnaliser ici avec les horaires/dates spécifiques
-      // slotMinTime: '08:00:00',
-      // slotMaxTime: '20:00:00',
-      // validRange: {
+      // Tu peux personnaliser ici avec des horaires ou des dates spécifiques
+      // slotMinTime: '08:00:00',  // Heure minimale affichée
+      // slotMaxTime: '20:00:00',  // Heure maximale affichée
+      // validRange: {            // Plage de dates valides
       //   start: '2025-05-30',
       //   end: '2025-05-31'
       // },
 
-      events: '/services/get_entrees_calander',
-      eventDrop: function (info) {
+      events: '/services/get_entrees_calander', // Source des événements
+      eventDrop: function (info) { // Quand un événement est déplacé
         fetch('/services/update_entree_calander', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -108,16 +109,18 @@
         .then(data => {
           if (!data.success) {
             alert('Erreur lors de la mise à jour.');
-            info.revert();
+            info.revert(); // Revenir en arrière si erreur
           }
         })
         .catch(() => {
           alert('Erreur serveur.');
-          info.revert();
+          info.revert(); // Revenir en arrière si erreur réseau
         });
       }
     });
 
-    calendar.render();
+    calendrier.render(); // Afficher le calendrier
   });
+</script>
+
 </script>
