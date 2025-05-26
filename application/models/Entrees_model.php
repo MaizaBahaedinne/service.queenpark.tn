@@ -40,10 +40,31 @@ class Entrees_model extends CI_Model {
         }
 
 
+        public function get_non_planifiees() {
+                $this->db->where('heurePrevu IS NULL');
+                $query = $this->db->get($this->table);
+                $result = [];
+
+                foreach ($query->result() as $row) {
+                    $result[] = [
+                        'id'    => $row->entreeId,
+                        'title' => $row->nature . ' x' . $row->quantite
+                    ];
+                }
+
+                return $result;
+            }
+
+
+
+
+
     public function update_heure_prevu($id, $new_start) {
         return $this->db->where('entreeId', $id)
                         ->update($this->table, ['heurePrevu' => $new_start]);
     }
+
+
 }
 
 
