@@ -65,12 +65,12 @@ class Reservation extends BaseController
          */
         public function satisfaction($reservation)
         {
-                $data['reservation'] = $this->reservation_model->ReservationInfo($reservationId);
-                $data['entrees'] = $this->services_model->entreeListing($reservationId);
-                $data['retours'] = $this->services_model->retourListing($reservationId);
+                $data['reservation'] = $this->reservation_model->ReservationInfo($reservation);
+                $data['entrees'] = $this->services_model->entreeListing($reservation);
+                $data['retours'] = $this->services_model->retourListing($reservation);
 
                 $this->global["pageTitle"] = "Rapport final de la réservation";
-                $this->loadViews("service/rapport", $this->global, $data, null);
+                $this->loadViews("service/satisfaction", $this->global, $data, null);
         }
 
         public function addEntrees($reservationId)
