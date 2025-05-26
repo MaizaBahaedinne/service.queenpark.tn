@@ -71,6 +71,11 @@
                 break;
               }
             }
+
+            // On sécurise les données même si elles n'existent pas
+            $quantite_retour = isset($retourExistant->quantite_retour) ? $retourExistant->quantite_retour : '';
+            $note_retour = isset($retourExistant->note_retour) ? htmlspecialchars($retourExistant->note_retour) : '';
+            $readonly = isset($retourExistant->quantite_retour); // Présence = déjà rempli = readonly
           ?>
             <div class="entree-row retour-entry mb-4 p-3">
               <h4><?= $entree->quantite ?>x <?= ucfirst($entree->nature) ?></h4>
@@ -86,8 +91,8 @@
                   max="<?= $entree->quantite ?>"
                   class="form-control"
                   required
-                  value="<?= $retourExistant ? $retourExistant->quantite_retour : '' ?>"
-                  <?= $retourExistant ? 'readonly' : '' ?>
+                  value="<?= $quantite_retour ?>"
+                  <?= $readonly ? 'readonly' : '' ?>
                 >
                 <small class="text-muted">Indique combien n’a pas été utilisé</small>
               </div>
@@ -99,13 +104,12 @@
                   class="form-control"
                   rows="2"
                   placeholder="Ex : Renvoyé, pas utilisé, etc."
-                  <?= $retourExistant ? 'readonly' : '' ?>
-                ><?= $retourExistant ? htmlspecialchars($retourExistant->note_retour) : '' ?></textarea>
+                  <?= $readonly ? 'readonly' : '' ?>
+                ><?= $note_retour ?></textarea>
               </div>
             </div>
           <?php endforeach; ?>
 
-          <button type="submit" class="btn btn-primary" <?= !empty($retours) ? 'disabled' : '' ?>>Enregistrer</button>
         </form>
       </div>
     </div>
