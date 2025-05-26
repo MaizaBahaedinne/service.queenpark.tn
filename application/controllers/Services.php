@@ -1,0 +1,29 @@
+<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+
+
+class Services extends CI_Controller {
+
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('Entrees_model');
+    }
+
+    public function get_entrees_calander() {
+        $events = $this->Entrees_model->get_all();
+        echo json_encode($events);
+    }
+
+    public function update_entree_calander() {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (isset($data['id'], $data['start'])) {
+            $updated = $this->Entrees_model->update_heure_prevu($data['id'], $data['start']);
+            echo json_encode(['success' => $updated]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Paramètres manquants.']);
+        }
+    }
+}
+
+
+?>

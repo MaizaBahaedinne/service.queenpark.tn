@@ -55,7 +55,55 @@
             </div>    
              <div class="col-lg-12 col-xs-6">
               <a href="<?php echo base_url() ?>Reservation/afficherFeedback/<?php echo $reservationId ?>">rapport finale</a>
-             </div>       
+             </div>   
+
+              <div class="col-lg-12 col-xs-6">
+                  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
+                  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js'></script>
+
+                  <div id='calendar'></div>
+                  <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                    var calendarEl = document.getElementById('calendar');
+
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                      initialView: 'timeGridWeek',
+                      editable: true,
+                      events: '/services/get_entrees_calander', // URL pour charger les entrées depuis le backend
+                      eventDrop: function(info) {
+                        // Envoi des données modifiées au serveur via AJAX
+                        fetch('/services/update_entree_calander', {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json'
+                          },
+                          body: JSON.stringify({
+                            id: info.event.id,
+                            start: info.event.start.toISOString(),
+                            end: info.event.end.toISOString()
+                          })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                          if (!data.success) {
+                            alert('Erreur lors de la mise à jour.');
+                            info.revert(); // Annule le déplacement en cas d'erreur
+                          }
+                        })
+                        .catch(() => {
+                          alert('Erreur lors de la communication avec le serveur.');
+                          info.revert();
+                        });
+                      }
+                    });
+
+                    calendar.render();
+                  });
+
+                  </script>
+             </div>   
+
+
             
            
           </div>  
