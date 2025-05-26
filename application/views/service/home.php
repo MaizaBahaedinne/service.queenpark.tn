@@ -158,8 +158,6 @@
 
     // Initialiser le calendrier
     const calendar = new FullCalendar.Calendar(calendarEl, {
-      locale: 'fr',
-      timeZone: 'Africa/Tunis', // ✅ Ajout crucial
       initialView: 'timeGridDay',
       editable: true,
       droppable: true,
