@@ -58,48 +58,52 @@
              </div>   
 
               <div class="col-lg-12 col-xs-6">
-                  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
-                  
-                  <div id='calendar'></div>
-                  <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                    var calendarEl = document.getElementById('calendar');
+                  <!-- FullCalendar CSS -->
+                  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
 
-                    var calendar = new FullCalendar.Calendar(calendarEl, {
-                      initialView: 'timeGridWeek',
-                      editable: true,
-                      events: '/services/get_entrees_calander', // URL pour charger les entrées depuis le backend
-                      eventDrop: function(info) {
-                        // Envoi des données modifiées au serveur via AJAX
-                        fetch('/services/update_entree_calander', {
-                          method: 'POST',
-                          headers: {
-                            'Content-Type': 'application/json'
-                          },
-                          body: JSON.stringify({
-                            id: info.event.id,
-                            start: info.event.start.toISOString(),
-                            end: info.event.end.toISOString()
-                          })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                          if (!data.success) {
-                            alert('Erreur lors de la mise à jour.');
-                            info.revert(); // Annule le déplacement en cas d'erreur
+                  <!-- FullCalendar JS -->
+                  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+                                    
+                  <div id="calendar"></div>
+
+                    
+                    <script>
+                      document.addEventListener('DOMContentLoaded', function() {
+                        var calendarEl = document.getElementById('calendar');
+
+                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                          initialView: 'timeGridWeek',
+                          editable: true,
+                          events: '/services/get_entrees_calander',
+                          eventDrop: function(info) {
+                            fetch('/services/update_entree_calander', {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({
+                                id: info.event.id,
+                                start: info.event.start.toISOString(),
+                                end: info.event.end.toISOString()
+                              })
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                              if (!data.success) {
+                                alert('Erreur lors de la mise à jour.');
+                                info.revert();
+                              }
+                            })
+                            .catch(() => {
+                              alert('Erreur serveur.');
+                              info.revert();
+                            });
                           }
-                        })
-                        .catch(() => {
-                          alert('Erreur lors de la communication avec le serveur.');
-                          info.revert();
                         });
-                      }
-                    });
 
-                    calendar.render();
-                  });
+                        calendar.render();
+                      });
+                    </script>
 
-                  </script>
              </div>   
 
 
