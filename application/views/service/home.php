@@ -1,5 +1,45 @@
 
 
+<style>
+  #event-list {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    min-height: 100px;
+    border: 2px dashed #dee2e6;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .fc-event {
+    padding: 8px 12px;
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 0.3rem;
+    cursor: grab;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.1s ease;
+  }
+
+  .fc-event:hover {
+    transform: scale(1.03);
+    background-color: #0b5ed7;
+  }
+
+  /* Bouton supprimer dans l'event */
+  .delete-btn {
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 2px 6px;
+    margin-left: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+</style>
 
 
 <div class="content-wrapper">
@@ -90,49 +130,7 @@
 </div>
 
 
-<style>
-  #event-list {
-    padding: 1rem;
-    background-color: #f8f9fa;
-    border-radius: 0.5rem;
-    min-height: 100px;
-    border: 2px dashed #dee2e6;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
 
-  .fc-event {
-    padding: 8px 12px;
-    background-color: #0d6efd;
-    color: white;
-    border-radius: 0.3rem;
-    cursor: grab;
-    font-size: 14px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.1s ease;
-  }
-
-  .fc-event:hover {
-    transform: scale(1.03);
-    background-color: #0b5ed7;
-  }
-
-  /* Bouton supprimer dans l'event */
-  .delete-btn {
-    background: red;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    padding: 2px 6px;
-    margin-left: 5px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-</style>
-
-<div id="calendar" style="flex: 1;"></div>
-<div id="event-list" style="width: 300px; margin-top: 20px;"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales/fr.global.min.js"></script>
