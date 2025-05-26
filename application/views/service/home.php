@@ -198,7 +198,7 @@
         fetch('/Services/update_entree_calander', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id, start })
+          body: JSON.stringify({ id, start , nature })
         })
         .then(res => res.json())
         .then(data => {
