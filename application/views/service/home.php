@@ -89,7 +89,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales/fr.js"></script>
+
 
 
 <script>
@@ -97,7 +97,6 @@
   initialView: 'timeGridDay',
   editable: true,
   height: 'auto',
-  locale: 'fr', // ← Voilà l'option magique 🪄
 
   slotMinTime: '<?php echo $reservation->heureDebut ;?>:00',
   slotMaxTime: '<?php echo $reservation->heureFin ;?>:00',
