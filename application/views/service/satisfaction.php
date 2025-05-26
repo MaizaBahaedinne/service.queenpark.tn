@@ -130,10 +130,10 @@
           <input type="hidden" name="photo_base64" id="photo_base64" />
           <br>
           <label>Nom et prénom</label>
-          <input type="text" name="nom" required>
+          <input type="text" name="nom" required class="form-control">
           <br>
           <label>Reclamation</label>
-          <textarea type="text" name="commentaire" required>
+          <textarea type="text" name="commentaire" required class="form-control"></textarea>
           <button type="submit" class="btn btn-primary">Envoyer mon avis</button>
         </form>
 
