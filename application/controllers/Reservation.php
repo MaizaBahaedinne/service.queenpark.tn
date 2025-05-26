@@ -32,6 +32,7 @@ class Reservation extends BaseController
         public function service($reservation)
         {
                 $data['reservationId'] = $reservation ;
+                $data['reservation'] = $this->reservation_model->ReservationInfo($reservation); 
                 $this->global["pageTitle"] = "service pour l'evenement ".$reservation;
                 $this->loadViews("service/home", $this->global, $data , null);
         }
