@@ -51,20 +51,18 @@ class Services_model extends CI_Model
 		}
     
 
-    
-    
-    /**
-     * This function is used to update the booking information
-     * @param array $bookingInfo : This is booking updated information
-     * @param number $bookingId : This is booking id
-     */
-    function editBooking($bookingInfo, $bookingId)
+    public function retourListing($reservationId)
     {
-        $this->db->where('bookingId', $bookingId);
-        $this->db->update('tbl_booking', $bookingInfo);
-        
-        return TRUE;
+        $this->db->select('r.*, e.nature, e.quantite');
+        $this->db->from('tbl_services_retours r');
+        $this->db->join('tbl_services_entrees e', 'e.entreeId = r.entreeId', 'left');
+        $this->db->where('e.reservationId', $reservationId);
+        $this->db->order_by('r.createdDTM', 'DESC');
+        $query = $this->db->get();
+
+        return $query->result();
     }
+    
 
 
     public function getById($id) {
