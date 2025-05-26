@@ -75,7 +75,7 @@ class Reservation extends BaseController
 
              public function afficherFeedback($reservationId)
             {
-                $this->load->model('Services_model');
+                $data['reservation'] = $this->reservation_model->ReservationInfo($reservation);
                 $data['feedbacks'] = $this->Services_model->getFeedbacks($reservationId);
                 $this->global['pageTitle'] = "Rapport de Satisfaction";
                 $this->loadViews("service/rapport", $this->global, $data, null);
