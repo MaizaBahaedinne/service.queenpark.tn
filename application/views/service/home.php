@@ -57,7 +57,7 @@
       <div class="col-lg-4 col-xs-6">
         <div class="small-box <?php if (count($retours) == 0)  { ?>bg-aqua<?php } else  {  ?>bg-grey<?php } ?> ">
           <div class="inner">
-            <h3 style="color: white;">Entrées</h3>
+            <h3 style="color: white;">Entrées (<?php echo count($entrees) ?></h3>
           </div>
           <div class="icon">
             <i class="ion ion-log-in"></i>
@@ -72,13 +72,13 @@
       <div class="col-lg-4 col-xs-6">
         <div class="small-box <?php if ( (count($entrees) > 0 ) && (count($retours) == 0)  )  { ?>bg-orange<?php } else  {  ?>bg-grey<?php } ?>">
           <div class="inner">
-            <h3 style="color: white;">Retours</h3>
+            <h3 style="color: white;">Retours (<?php echo count($retours) ?></h3>
           </div>
           <div class="icon">
             <i class="ion ion-log-out"></i>
           </div>
           <a href="<?php echo base_url() ?>Reservation/sortie/<?php echo $reservationId ?>" class="small-box-footer">
-            More info <i class="fa fa-arrow-circle-right"></i>
+            Entrer <i class="fa fa-arrow-circle-right"></i>
           </a>
         </div>
       </div>
@@ -87,13 +87,13 @@
       <div class="col-lg-4 col-xs-6">
         <div class="small-box <?php if ( (count($entrees) > 0 ) && (count($retours) > 0)  )  { ?>bg-red<?php } else  {  ?>bg-grey<?php } ?>">
           <div class="inner">
-            <h3 style="color: white;">Clôture</h3>
+            <h3 style="color: white;">Clôture ((<?php echo count($rapport) ?>)</h3>
           </div>
           <div class="icon">
             <i class="ion ion-happy"></i>
           </div>
           <a href="<?php echo base_url() ?>Reservation/satisfaction/<?php echo $reservationId ?>" class="small-box-footer">
-            More info <i class="fa fa-arrow-circle-right"></i>
+            Entrer <i class="fa fa-arrow-circle-right"></i>
           </a>
         </div>
       </div>
@@ -101,7 +101,7 @@
       <!-- Rapport final -->
       <div class="col-lg-12 col-xs-6">
         <p>
-          <a href="<?php echo base_url() ?>Reservation/afficherFeedback/<?php echo $reservationId ?>" class="btn btn-primary">
+          <a href="<?php echo base_url() ?>Reservation/afficherFeedback/<?php echo $reservationId ?>" class="btn btn-block btn-primary">
             Voir le rapport final
           </a>
         </p>
