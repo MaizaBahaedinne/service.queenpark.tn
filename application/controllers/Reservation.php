@@ -43,6 +43,7 @@ class Reservation extends BaseController
          */
         public function entree($reservation)
         {
+                $data['retours'] = $this->services_model->retourListing($reservation);
                 $data['reservation'] = $this->reservation_model->ReservationInfo($reservation); 
                 $data['entrees'] = $this->services_model->entreeListing($reservation); 
                 $this->global["pageTitle"] = "Les entrées pour la soirée";
@@ -56,6 +57,7 @@ class Reservation extends BaseController
         public function sortie($reservation)
         {
                     // Récup retours déjà enregistrés pour cette résa (associés aux entrées)
+                $data['rapport'] = $this->services_model->retourListing($reservation);
                 $data['retours'] = $this->services_model->retourListing($reservation);
                 $data['reservation'] = $this->reservation_model->ReservationInfo($reservation); 
                 $data['entrees'] = $this->services_model->entreeListing($reservation); 
