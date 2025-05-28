@@ -62,7 +62,7 @@
           <div class="icon">
             <i class="ion ion-log-in"></i>
           </div>
-          <a href="<?php echo base_url() ?>Reservation/entree/<?php echo $reservationId ?>" class="small-box-footer">
+          <a href="<?php if (count($retours) == 0)  {  echo base_url() ?>Reservation/entree/<?php echo $reservationId }  ?>" class="small-box-footer">
             entrer <i class="fa fa-arrow-circle-right"></i>
           </a>
         </div>
@@ -77,7 +77,7 @@
           <div class="icon">
             <i class="ion ion-log-out"></i>
           </div>
-          <a href="<?php echo base_url() ?>Reservation/sortie/<?php echo $reservationId ?>" class="small-box-footer">
+          <a href="<?php  if ( (count($entrees) > 0 ) && (count($retours) == 0)  )  { echo base_url() ?>Reservation/sortie/<?php echo $reservationId  } ?>" class="small-box-footer">
             Entrer <i class="fa fa-arrow-circle-right"></i>
           </a>
         </div>
@@ -92,7 +92,7 @@
           <div class="icon">
             <i class="ion ion-happy"></i>
           </div>
-          <a href="<?php echo base_url() ?>Reservation/satisfaction/<?php echo $reservationId ?>" class="small-box-footer">
+          <a href="<?php if ( (count($entrees) > 0 ) && (count($retours) > 0)  )  {  echo base_url() ?>Reservation/satisfaction/<?php echo $reservationId } ?>" class="small-box-footer">
             Entrer <i class="fa fa-arrow-circle-right"></i>
           </a>
         </div>
