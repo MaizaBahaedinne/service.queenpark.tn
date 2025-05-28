@@ -110,7 +110,7 @@ button {
                 <h4><?= ucfirst($entree->nature) ?></h4>
               </div>
               <div class="col">
-                <input type="number" min="0" class="form-control quantite-input" placeholder="Ajouter...">
+                <input type="number" min="0"  step="0,1" class="form-control quantite-input" placeholder="Ajouter...">
               </div>
               <div class="col">
                 <select class="form-select moment-select" required>
