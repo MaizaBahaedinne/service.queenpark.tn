@@ -151,7 +151,7 @@ button {
               <div class="row">
                 <div class="col">
                   <label>Quantité</label>
-                  <input type="number" name="quantite[]" required>
+                  <input type="number" step="0.1" name="quantite[]" required>
                 </div>
                 <div class="col">
                   <label>Nature</label>

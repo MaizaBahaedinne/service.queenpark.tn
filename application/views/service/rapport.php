@@ -19,6 +19,9 @@
         <p><strong>Note Service :</strong> 
             <?= afficherEtoiles($fb['note_service']); ?>
         </p>
+        <p><strong>Nom et prénom :</strong> 
+            <?= $fb['nom']; ?>
+        </p>
         <p><strong>Commentaire :</strong> <?= htmlspecialchars($fb['commentaire']); ?></p>
         
         <?php if(!empty($fb['photo_user'])): ?>

@@ -84,6 +84,7 @@
                   type="number"
                   name="quantite_retour[]"
                   min="0"
+                  step="0.1"
                   max="<?= $entree->quantite ?>"
                   class="form-control"
                   required
