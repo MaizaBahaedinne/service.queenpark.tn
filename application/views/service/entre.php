@@ -81,6 +81,7 @@ button {
     </h1>
   </section>
 
+ <?php if (count($retours) == 0 ) { ?> 
   <section class="content">
     <div class="row">
       <div class="col-lg-12 col-xs-12">
@@ -196,6 +197,8 @@ button {
       </div>
     </div>
   </section>
+ <?php } ?> 
+
 </div>
 
 
