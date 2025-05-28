@@ -32,7 +32,7 @@ class API extends CI_Controller
         }
 
         $id = (int) $data->id;
-        $quantite = isset($data->quantite) ? (int) $data->quantite : 0;
+        $quantite = isset($data->quantite) ?  $data->quantite : 0;
         $moment_service = isset($data->moment_service) ? $data->moment_service : '';
 
         $entree = $this->services_model->getById($id);
