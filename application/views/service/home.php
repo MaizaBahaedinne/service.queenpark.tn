@@ -55,7 +55,7 @@
 
       <!-- Entrée -->
       <div class="col-lg-4 col-xs-6">
-        <div class="small-box bg-aqua">
+        <div class="small-box <?php if (count($retours) == 0)  { ?>bg-aqua<?php } else  {  ?>bg-grey<?php } ?> ">
           <div class="inner">
             <h3 style="color: white;">Entrées</h3>
           </div>
@@ -63,14 +63,14 @@
             <i class="ion ion-log-in"></i>
           </div>
           <a href="<?php echo base_url() ?>Reservation/entree/<?php echo $reservationId ?>" class="small-box-footer">
-            More info <i class="fa fa-arrow-circle-right"></i>
+            entrer <i class="fa fa-arrow-circle-right"></i>
           </a>
         </div>
       </div>
 
       <!-- Sortie -->
       <div class="col-lg-4 col-xs-6">
-        <div class="small-box bg-orange">
+        <div class="small-box <?php if ( (count($entrees) > 0 ) && (count($retours) == 0)  )  { ?>bg-orange<?php } else  {  ?>bg-grey<?php } ?>">
           <div class="inner">
             <h3 style="color: white;">Retours</h3>
           </div>
@@ -85,7 +85,7 @@
 
       <!-- Clôture -->
       <div class="col-lg-4 col-xs-6">
-        <div class="small-box bg-red">
+        <div class="small-box <?php if ( (count($entrees) > 0 ) && (count($retours) > 0)  )  { ?>bg-red<?php } else  {  ?>bg-grey<?php } ?>">
           <div class="inner">
             <h3 style="color: white;">Clôture</h3>
           </div>
