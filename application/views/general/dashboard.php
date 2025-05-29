@@ -125,7 +125,7 @@
                                   ?>
                               <?php endif; ?>
 
-                              <?php if ($isAdmin == 1 ) : ?>
+                              <?php if ($is_admin == 1 ) : ?>
                                <a class="btn btn-sm btn-primary btn-block" href="<?= base_url().'Reservation/service/'.$record->reservationId; ?>" title="Edit">
                                       <i class="fa fa-eye"></i> Service
                                   </a>
