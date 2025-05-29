@@ -121,7 +121,7 @@
                               <?php else: ?>
                                   <?php
                                   $diff = $now->diff($dateFin);
-                                  echo ($diff->invert ? "Échéance dépassée" : "Jours restants : " . $diff->days);
+                                  echo ($diff->invert ? "Échéance dépassée" : "Jours restants : " . $diff->days + 1);
                                   ?>
                               <?php endif; ?>
 
