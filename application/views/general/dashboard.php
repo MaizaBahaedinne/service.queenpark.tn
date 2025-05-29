@@ -107,7 +107,11 @@
                         </td>
                        
                         <td class="text-center">
-                            <a class="btn btn-sm btn-primary" href="<?php echo base_url().'Reservation/service/'.$record->reservationId; ?>" title="Edit"><i class="fa fa-eye"></i> Service </a>
+                          <?= (new DateTime() >= (new DateTime($record->dateFin))->setTime(0,0) && new DateTime() <= (new DateTime($record->dateFin))->modify('+1 day')->setTime(3,0)) ? ?>
+                           <a class="btn btn-sm btn-primary btn-block" href="<?php echo base_url().'Reservation/service/'.$record->reservationId; ?>" title="Edit"><i class="fa fa-eye"></i> Service </a>
+                          <?php : ((new DateTime() > new DateTime($record->dateFin)) ? "Échéance dépassée" : "Jours restants : " . (new DateTime())->diff(new DateTime($record->dateFin))->days) ?>
+
+                           
                         </td>
                     </tr>
                     <?php
