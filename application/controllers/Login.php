@@ -86,6 +86,7 @@ class Login extends CI_Controller
                                         'isAdmin'=>$result->isAdmin,
                                         'accessInfo'=>$accessInfo,
                                         'lastLogin'=> empty($lastLogin->createdDtm) ? '' : $lastLogin->createdDtm,
+                                        'avatar' => $result->avatar,
                                         'isLoggedIn' => TRUE
                                 );
 

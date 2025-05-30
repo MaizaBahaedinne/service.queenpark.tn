@@ -76,7 +76,10 @@
                   <!-- User image -->
                   <li class="user-header">
                     
-                    <img src="<?php echo base_url(); ?>assets/dist/img/avatar.png" class="img-circle" alt="User Image" />
+                   
+                    <?php if(!empty($fb['photo_user'])): ?>
+                        <img src="data:image/jpeg;base64,<?= $avatar ?>" class="img-circle" alt="Photo utilisateur" style="max-width:150px; border-radius:8px;">
+                    <?php endif; ?>
                     <p>
                       <?php echo $name; ?>
                       <small><?php echo $role_text; ?></small>
@@ -112,7 +115,7 @@
             </li>
             
             <?php
-            if($is_admin == 1)
+            if($is_admin == 1 || $role_text == 'Directeur')
             {
             ?>
             <li>
