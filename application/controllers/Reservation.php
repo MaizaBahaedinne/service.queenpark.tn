@@ -32,8 +32,9 @@ class Reservation extends BaseController
         public function service($reservation)
         {
                 $data['reservationId'] = $reservation ;
+            
                 $data['reservation'] = $this->reservation_model->ReservationInfo($reservation); 
-               
+        
                 $data['retours'] = $this->services_model->retourListing($reservation);
                 $data['entrees'] = $this->services_model->entreeListing($reservation);
                 $data['rapport'] = $this->services_model->retourListing($reservation);

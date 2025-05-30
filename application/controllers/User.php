@@ -36,10 +36,12 @@ class User extends BaseController
             
 
 
-        $this->global['pageTitle'] = 'CodeInsect : Dashboard';
+        $this->global['pageTitle'] = 'Dashboard';
 
         $data['userRecords'] = $this->reservation_model->ReservationAffecationListing($this->vendorId); 
         
+          if ($this->role == 2 ) {   $data['userRecords'] = $this->reservation_model->ReservationAffecationListing();  }
+
         $this->loadViews("general/dashboard", $this->global, $data , NULL);
     }
     
