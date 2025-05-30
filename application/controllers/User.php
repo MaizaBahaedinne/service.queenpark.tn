@@ -333,7 +333,7 @@ class User extends BaseController
                 }
 
                 
-                $result = $this->user_model->editUser($userId, $updateData);
+                $result = $this->user_model->editUser($updateData, $userId);
 
                 if ($result) {
                     $this->session->set_flashdata('success', 'Mot de passe et avatar mis à jour avec succès.');
