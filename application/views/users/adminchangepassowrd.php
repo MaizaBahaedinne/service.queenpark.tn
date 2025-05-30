@@ -29,7 +29,7 @@
             <h3 class="box-title">Nouveau mot de passe & avatar</h3>
           </div>
 
-          <form action="<?php echo base_url('User/updatePassword/'.$user->userId); ?>" method="post" onsubmit="return checkPasswordsMatch();">
+          <form action="<?php echo base_url('User/updatePassword/'.$user->userId); ?>" method="post" onsubmit="return checkPasswordsMatch();" enctype="multipart/form-data">
             <div class="box-body">
               <div style="margin-bottom: 20px;">
                 <label>Avatar actuel :</label><br>
