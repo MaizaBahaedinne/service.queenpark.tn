@@ -57,7 +57,8 @@
       <div class="col-lg-4 col-xs-6">
         <div class="small-box <?php if (count($retours) == 0)  { ?>bg-aqua<?php } else  {  ?>bg-grey<?php } ?> ">
           <div class="inner">
-            <h3 style="color: white;">Entrées (<?php echo count($entrees) ?>)</h3>
+            <h3 style="color: white;">Entrées </h3>
+            <p><?php echo count($entrees) ?></p>
           </div>
           <div class="icon">
             <i class="ion ion-log-in"></i>
@@ -73,6 +74,7 @@
         <div class="small-box <?php if ( (count($entrees) > 0 ) && (count($retours) == 0)  )  { ?>bg-orange<?php } else  {  ?>bg-grey<?php } ?>">
           <div class="inner">
             <h3 style="color: white;">Retours (<?php echo count($retours) ?>)</h3>
+            <p><?php echo count($entrees) ?></p>
           </div>
           <div class="icon">
             <i class="ion ion-log-out"></i>
@@ -88,6 +90,7 @@
         <div class="small-box <?php if ( (count($entrees) > 0 ) && (count($retours) > 0)  )  { ?>bg-red<?php } else  {  ?>bg-grey<?php } ?>">
           <div class="inner">
             <h3 style="color: white;">Clôture (<?php echo count($rapport) ?>)</h3>
+            <p><?php echo count($entrees) ?></p>
           </div>
           <div class="icon">
             <i class="ion ion-happy"></i>
