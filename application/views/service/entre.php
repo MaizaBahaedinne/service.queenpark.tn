@@ -75,11 +75,20 @@ button {
 
 <<div class="content-wrapper">
   <section class="content-header">
-    <h1>
-      <i class="fa fa-tachometer"></i> Gestion des entrées
-      <small>Ajout des entrées pour l’évènement du <?php echo $reservation->dateFin ?> à <?php echo $reservation->salle ?></small>
-    </h1>
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <!-- Bouton retour à l'accueil -->
+      <a href="<?php echo base_url('Reservation/service/'.$reservation->reservationId); ?>" class="btn btn-default">
+        <i class="fa fa-arrow-left"></i> Retour
+      </a>
+
+      <!-- Titre de la page -->
+      <h1 style="margin: 0;">
+        <i class="fa fa-tachometer"></i> Gestion des entrées
+        <small>Ajout des entrées pour l’évènement du <?php echo $reservation->dateFin ?> à <?php echo $reservation->salle ?></small>
+      </h1>
+    </div>
   </section>
+
 
  <?php if (count($retours) == 0 ) { ?> 
   <section class="content">
