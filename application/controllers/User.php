@@ -101,7 +101,7 @@ class User extends BaseController
     function adminchangePswd($userId)
     {
   
-            $this->load->model('user_model');
+           
             $data['user'] = $this->user_model->getUserInfo($userId);
             
             $this->global['pageTitle'] = 'Changement de mot de passe ';
