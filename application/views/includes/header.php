@@ -69,7 +69,9 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="<?php echo base_url(); ?>assets/dist/img/avatar.png" class="user-image" alt="User Image"/>
+                  <?php if(!empty($fb['photo_user'])): ?>
+                      <img src="data:image/jpeg;base64,<?= $fb['avatar']; ?>" class="img-circle" alt="Photo utilisateur" style="max-width:150px; border-radius:8px;">
+                  <?php endif; ?>
                   <span class="hidden-xs"><?php echo $name; ?></span>
                 </a>
                 <ul class="dropdown-menu">
@@ -78,8 +80,8 @@
                     
                    
                     <?php if(!empty($fb['photo_user'])): ?>
-                        <img src="data:image/jpeg;base64,<?= $avatar ?>" class="img-circle" alt="Photo utilisateur" style="max-width:150px; border-radius:8px;">
-                    <?php endif; ?>
+                      <img src="data:image/jpeg;base64,<?= $fb['avatar']; ?>" class="img-circle" alt="Photo utilisateur" style="max-width:150px; border-radius:8px;">
+                  <?php endif; ?>
                     <p>
                       <?php echo $name; ?>
                       <small><?php echo $role_text; ?></small>
