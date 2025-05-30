@@ -98,11 +98,11 @@ class User extends BaseController
      /**
      * This function is used to load the add new form
      */
-    function adminchangePswd()
+    function adminchangePswd($userId)
     {
   
             $this->load->model('user_model');
-            $data['roles'] = $this->user_model->getUserRoles();
+            $data['user'] = $this->user_model->getUserInfo($userId);
             
             $this->global['pageTitle'] = 'Changement de mot de passe ';
 
@@ -303,13 +303,13 @@ class User extends BaseController
 
                 if ($password !== $confirmPassword) {
                     $this->session->set_flashdata('error', 'Les mots de passe ne correspondent pas.');
-                    redirect('User/edit/' . $userId);
+                    redirect('User/adminchangePswd/' . $userId);
                     return;
                 }
 
                 if (strlen($password) < 6) {
                     $this->session->set_flashdata('error', 'Le mot de passe doit faire au moins 6 caractères.');
-                    redirect('User/edit/' . $userId);
+                    redirect('User/adminchangePswd/' . $userId);
                     return;
                 }
 
@@ -332,8 +332,8 @@ class User extends BaseController
                     // Sinon, ignore la photo (tu peux ajouter un message d’erreur si tu veux)
                 }
 
-                $this->load->model('User_model');
-                $result = $this->User_model->updateUser($userId, $updateData);
+                
+                $result = $this->user_model->updateUser($userId, $updateData);
 
                 if ($result) {
                     $this->session->set_flashdata('success', 'Mot de passe et avatar mis à jour avec succès.');
@@ -341,7 +341,7 @@ class User extends BaseController
                     $this->session->set_flashdata('error', 'Erreur lors de la mise à jour.');
                 }
 
-                redirect('User/adminchangepassowrd/' . $userId);
+                redirect('User/adminchangePswd/' . $userId);
             }
 
 
