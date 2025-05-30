@@ -84,7 +84,7 @@ button {
       <!-- Titre de la page -->
       <h2 style="margin: 0;">
         <i class="fa fa-tachometer"></i> Gestion des entrées</h2>
-        <br>
+        <hr>
         <small>Ajout des entrées pour l’évènement du <?php echo $reservation->dateFin ?> à <?php echo $reservation->salle ?></small>
      
     </div>
