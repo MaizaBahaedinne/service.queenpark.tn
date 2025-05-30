@@ -293,6 +293,30 @@ class User extends BaseController
             else { echo(json_encode(array('status'=>FALSE))); }
         }
     }
+
+
+    public function updatePassword($userId)
+{
+    $password = $this->input->post('password');
+    $confirm = $this->input->post('confirm_password');
+
+    if ($password !== $confirm) {
+        $this->session->set_flashdata('error', 'Les mots de passe ne correspondent pas.');
+        redirect('User/editPassword/'.$userId);
+        return;
+    }
+
+    $data = [
+        'password' => getHashedPassword($password),
+        'updatedBy' => $this->session->userdata('userId'),
+        'updatedDtm' => date('Y-m-d H:i:s')
+    ];
+
+    $this->UserModel->editUser($userId, $data);
+    $this->session->set_flashdata('success', 'Mot de passe mis à jour avec succès.');
+    redirect('User/adminchangepassowrd/'.$userId);
+}
+
     
     /**
      * Page not found : error 404
