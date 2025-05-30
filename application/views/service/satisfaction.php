@@ -147,39 +147,46 @@
   </section>
 </div>
 
-          <script>
-          // On active la webcam au chargement pour préparer la prise de photo
-          const video = document.getElementById('video');
-          const photoInput = document.getElementById('photo_base64');
+<script>
+  const video = document.getElementById('video');
+  const photoInput = document.getElementById('photo_base64');
 
-          navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-            .then(stream => {
-              video.srcObject = stream;
-            })
-            .catch(err => {
-              console.warn('Webcam non accessible', err);
-            });
+  let streamStarted = false;
 
-          // Au submit, on capture une image, on encode en base64, on met dans le champ caché
-          document.getElementById('feedbackForm').addEventListener('submit', async function(e){
-            e.preventDefault();
+  // Démarrer la webcam
+  navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+    .then(stream => {
+      video.srcObject = stream;
 
-            // Création d'un canvas pour capturer le frame
-            const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth || 320;
-            canvas.height = video.videoHeight || 240;
+      // On attend que la vidéo soit vraiment prête
+      video.onloadedmetadata = () => {
+        video.play();
+        streamStarted = true;
+      };
+    })
+    .catch(err => {
+      console.warn('Webcam non accessible', err);
+    });
 
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  document.getElementById('feedbackForm').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-            // encode en base64
-            const dataUrl = canvas.toDataURL('image/jpeg');
+    if (!streamStarted || video.videoWidth === 0) {
+      alert('Caméra non prête, réessayez dans une seconde...');
+      return;
+    }
 
-            // on place dans le champ caché
-            photoInput.value = dataUrl;
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
 
-            // submit après avoir ajouté la photo
-            this.submit();
-          });
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-          </script>
+    const dataUrl = canvas.toDataURL('image/jpeg');
+    photoInput.value = dataUrl;
+
+    this.submit();
+  });
+</script>
+
