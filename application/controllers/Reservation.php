@@ -118,6 +118,7 @@ class Reservation extends BaseController
                                             'nature'          => $natures[$i],
                                             'moment_service'  => $moments[$i],
                                             'note'            => $note
+                                            'createdBy'       => $this->vendorId,
                                         );
                                     }
                                 }
