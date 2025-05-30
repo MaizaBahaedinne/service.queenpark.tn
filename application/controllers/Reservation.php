@@ -117,7 +117,7 @@ class Reservation extends BaseController
                                             'quantite'        => $quantites[$i],
                                             'nature'          => $natures[$i],
                                             'moment_service'  => $moments[$i],
-                                            'note'            => $note
+                                            'note'            => $note,
                                             'createdBy'       => $this->vendorId,
                                         );
                                     }
