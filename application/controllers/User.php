@@ -102,7 +102,7 @@ class User extends BaseController
     {
            
             $data['user'] = $this->user_model->getUserInfo($userId);
-     
+
             
             $this->global['pageTitle'] = 'Changement de mot de passe ';
 
@@ -333,7 +333,7 @@ class User extends BaseController
                 }
 
                 
-                $result = $this->user_model->updateUser($userId, $updateData);
+                $result = $this->user_model->editUser($userId, $updateData);
 
                 if ($result) {
                     $this->session->set_flashdata('success', 'Mot de passe et avatar mis à jour avec succès.');
