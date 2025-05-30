@@ -36,12 +36,24 @@
 </style>
 
 <div class="content-wrapper">
-  <section class="content-header">
-    <h1>
-      <i class="fa fa-tachometer"></i> Gestion des retours
-      <small>Ajout des retours pour l’évènement du <?= $reservation->dateFin ?> à <?= $reservation->salle ?></small>
-    </h1>
-  </section>
+  <<section class="content-header">
+  <div style="display: flex; align-items: center; gap: 15px;">
+    <!-- Bouton retour à l'accueil -->
+    <a href="<?php echo base_url('Reservation/service/' . $reservation->reservationId); ?>" class="btn btn-default">
+      <i class="fa fa-arrow-left"></i> Retour
+    </a>
+
+    <!-- Titre principal -->
+    <div>
+      <h2 style="margin: 0;">
+        <i class="fa fa-tachometer"></i> Gestion des retours
+      </h2>
+      <small>
+        Les retours pour l’évènement du <?php echo $reservation->dateFin ?> à <?php echo $reservation->salle ?>
+      </small>
+    </div>
+  </div>
+</section>
 
   <section class="content">
     <div class="row">
@@ -56,6 +68,7 @@
           <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
         <?php endif; ?>
 
+        <?php if(coiunt($retours) == 0 ) :  ?>
         <form method="post" action="<?= base_url("Reservation/addRetours/{$reservation->reservationId}") ?>" class="form-style">
           
           <?php foreach ($entrees as $entree): 
@@ -111,6 +124,12 @@
             <button type="submit" class="btn btn-primary">Enregistrer les retours</button>
           </div>
         </form>
+        <?php else : ?>
+          <div class="alert alert-info" role="alert" style="margin-top: 15px;">
+            <i class="fa fa-info-circle"></i> 
+            Les retours ont déjà été saisis. Vous pouvez maintenant passer au <a href="<?php echo base_url('Reservation/satisfaction//'.$reservation->reservationId); ?>">formulaire de satisfaction client</a>.
+          </div>
+        <?php endif ; ?>
       </div>
     </div>
   </section>
