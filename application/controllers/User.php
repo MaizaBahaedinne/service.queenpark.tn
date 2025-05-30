@@ -40,7 +40,7 @@ class User extends BaseController
 
         
         
-          if ($this->vendorId == 25 || $this->vendorId == 1 ) {   
+          if ($this->vendorId == 25 || $this->vendorId == 1 || $this->vendorId == 1736 || $this->vendorId == 400 ) {   
                 $data['userRecords'] = $this->reservation_model->ReservationListing() ;  }
           else 
              { 
