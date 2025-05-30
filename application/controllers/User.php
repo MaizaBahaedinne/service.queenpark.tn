@@ -48,12 +48,7 @@ class User extends BaseController
      */
     function userListing()
     {
-        if(!$this->isAdmin() || !$this->roleText == "Directeur" )
-        {
-            $this->loadThis();
-        }
-        else
-        {        
+            
             $searchText = '';
             if(!empty($this->input->post('searchText'))) {
                 $searchText = $this->security->xss_clean($this->input->post('searchText'));
@@ -71,7 +66,7 @@ class User extends BaseController
             $this->global['pageTitle'] = 'CodeInsect : User Listing';
             
             $this->loadViews("users/users", $this->global, $data, NULL);
-        }
+        
     }
 
     /**
