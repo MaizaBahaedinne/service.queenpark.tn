@@ -40,7 +40,7 @@ class User extends BaseController
 
         $data['userRecords'] = $this->reservation_model->ReservationAffecationListing($this->vendorId); 
         
-          if ($this->role == 2 ) {   $data['userRecords'] = $this->reservation_model->ReservationListing() ;  }
+          if ($this->vendorId == 25 || $this->vendorId == 1 ) {   $data['userRecords'] = $this->reservation_model->ReservationListing() ;  }
 
         $this->loadViews("general/dashboard", $this->global, $data , NULL);
     }
