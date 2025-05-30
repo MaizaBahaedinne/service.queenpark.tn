@@ -295,27 +295,56 @@ class User extends BaseController
     }
 
 
-    public function updatePassword($userId)
-{
-    $password = $this->input->post('password');
-    $confirm = $this->input->post('confirm_password');
+       public function updatePassword($userId)
+            {
+                $password = $this->input->post('password');
+                $confirmPassword = $this->input->post('confirm_password');
+                $avatarBase64 = $this->input->post('avatar_base64'); // base64 sans prefix
 
-    if ($password !== $confirm) {
-        $this->session->set_flashdata('error', 'Les mots de passe ne correspondent pas.');
-        redirect('User/editPassword/'.$userId);
-        return;
-    }
+                if ($password !== $confirmPassword) {
+                    $this->session->set_flashdata('error', 'Les mots de passe ne correspondent pas.');
+                    redirect('User/edit/' . $userId);
+                    return;
+                }
 
-    $data = [
-        'password' => getHashedPassword($password),
-        'updatedBy' => $this->session->userdata('userId'),
-        'updatedDtm' => date('Y-m-d H:i:s')
-    ];
+                if (strlen($password) < 6) {
+                    $this->session->set_flashdata('error', 'Le mot de passe doit faire au moins 6 caractères.');
+                    redirect('User/edit/' . $userId);
+                    return;
+                }
 
-    $this->UserModel->editUser($userId, $data);
-    $this->session->set_flashdata('success', 'Mot de passe mis à jour avec succès.');
-    redirect('User/adminchangepassowrd/'.$userId);
-}
+                // Hash du mot de passe (change selon ta config)
+                $hashedPassword = getHashedPassword ($password);
+
+                // Prépare update data
+                $updateData = [
+                    'password' => $hashedPassword,
+                    'updatedBy' => $this->session->userdata('userId'),
+                    'updatedDtm' => date('Y-m-d H:i:s')
+                ];
+
+                if (!empty($avatarBase64)) {
+                    // Vérifie que base64 est bien image jpeg/png
+                    if (preg_match('/^[a-zA-Z0-9\/+\r\n]+={0,2}$/', $avatarBase64)) {
+                        // Stocke la base64 directement (comme dans ton feedback)
+                        $updateData['avatar'] = $avatarBase64;
+                    }
+                    // Sinon, ignore la photo (tu peux ajouter un message d’erreur si tu veux)
+                }
+
+                $this->load->model('User_model');
+                $result = $this->User_model->updateUser($userId, $updateData);
+
+                if ($result) {
+                    $this->session->set_flashdata('success', 'Mot de passe et avatar mis à jour avec succès.');
+                } else {
+                    $this->session->set_flashdata('error', 'Erreur lors de la mise à jour.');
+                }
+
+                redirect('User/adminchangepassowrd/' . $userId);
+            }
+
+
 
     
     /**
