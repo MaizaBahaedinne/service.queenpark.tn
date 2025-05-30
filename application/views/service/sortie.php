@@ -68,7 +68,7 @@
           <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
         <?php endif; ?>
 
-        <?php if(coiunt($retours) == 0 ) :  ?>
+        <?php if(count($retours) == 0 ) :  ?>
         <form method="post" action="<?= base_url("Reservation/addRetours/{$reservation->reservationId}") ?>" class="form-style">
           
           <?php foreach ($entrees as $entree): 
