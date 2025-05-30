@@ -48,7 +48,7 @@ class User extends BaseController
      */
     function userListing()
     {
-        if(!$this->isAdmin())
+        if(!$this->isAdmin() || $this->role_text == "Directeur" )
         {
             $this->loadThis();
         }
