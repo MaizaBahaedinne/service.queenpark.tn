@@ -70,7 +70,7 @@
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <?php if(!empty($avatar)): ?>
-                      <img src="data:image/jpeg;base64,<?= $avatar; ?>" class="img-circle" >
+                      <img src="data:image/jpeg;base64,<?= $avatar; ?>" class="user-image" >
                   <?php endif; ?>
                   <span class="hidden-xs"><?php echo $name; ?></span>
                 </a>
