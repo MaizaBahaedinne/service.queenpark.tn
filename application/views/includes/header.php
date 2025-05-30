@@ -70,7 +70,7 @@
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <?php if(!empty($avatar)): ?>
-                      <img src="data:image/jpeg;base64,<?= $avatar; ?>" class="img-circle" alt="Photo utilisateur" style="max-width:150px; border-radius:8px;">
+                      <img src="data:image/jpeg;base64,<?= $avatar; ?>" class="img-circle" >
                   <?php endif; ?>
                   <span class="hidden-xs"><?php echo $name; ?></span>
                 </a>
@@ -80,7 +80,7 @@
                     
                    
                     <?php if(!empty($avatar)): ?>
-                      <img src="data:image/jpeg;base64,<?= $avatar; ?>" class="img-circle" alt="Photo utilisateur" style="max-width:150px; border-radius:8px;">
+                      <img src="data:image/jpeg;base64,<?= $avatar; ?>" class="img-circle" alt="Photo utilisateur" >
                   <?php endif; ?>
                     <p>
                       <?php echo $name; ?>
