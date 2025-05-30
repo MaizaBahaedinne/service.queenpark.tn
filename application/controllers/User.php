@@ -94,6 +94,21 @@ class User extends BaseController
         }
     }
 
+
+     /**
+     * This function is used to load the add new form
+     */
+    function adminchangePswd()
+    {
+  
+            $this->load->model('user_model');
+            $data['roles'] = $this->user_model->getUserRoles();
+            
+            $this->global['pageTitle'] = 'Changement de mot de passe ';
+
+            $this->loadViews("users/adminchangepassowrd", $this->global, $data, NULL);
+    }
+
     /**
      * This function is used to check whether email already exist or not
      */

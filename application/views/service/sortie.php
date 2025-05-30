@@ -125,7 +125,7 @@
           </div>
         </form>
         <?php else : ?>
-          <div class="alert alert-info" role="alert" style="margin-top: 15px;">
+          <div class="alert alert-danger" role="alert" style="margin-top: 15px;">
             <i class="fa fa-info-circle"></i> 
             Les retours ont déjà été saisis. Vous pouvez maintenant passer au <a href="<?php echo base_url('Reservation/satisfaction//'.$reservation->reservationId); ?>">formulaire de satisfaction client</a>.
           </div>
