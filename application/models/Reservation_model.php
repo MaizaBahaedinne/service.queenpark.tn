@@ -42,6 +42,34 @@ class Reservation_model extends CI_Model
     }
 
 
+/**
+     * This function is used to get the user listing count
+     * @param string $searchText : This is optional search text
+     * @param number $page : This is pagination offset
+     * @param number $segment : This is pagination limit
+     * @return array $result : This is result
+     */
+    function ReservationListing()
+    {
+        $this->db->select('BaseTbl.reservationId , BaseTbl.salleId , BaseTbl.titre , BaseTbl.type , BaseTbl.prix ,  BaseTbl.dateDebut , BaseTbl.heureDebut , BaseTbl.dateFin , BaseTbl.heureFin , BaseTbl.cuisine , BaseTbl.tableCM  , BaseTbl.nbPlace , BaseTbl.noteAdmin , BaseTbl.statut , Client.name clientName , Client.mobile , Salles.nom salle');
+        $this->db->from('tbl_reservation as BaseTbl');
+       
+        $this->db->join('tbl_users as Client', 'Client.userId = BaseTbl.clientId','left');
+        $this->db->join('tbl_users as Locataire', 'Locataire.userId = BaseTbl.clientId','left');
+        $this->db->join('tbl_salle as Salles', 'Salles.salleID = BaseTbl.salleId','left');
+        
+        
+        $this->db->where('BaseTbl.dateFin >=  SUBDATE(NOW(),2) ');
+        
+        $this->db->where('BaseTbl.statut in (0,1) ');
+    
+         $this->db->order_by('BaseTbl.dateFin ASC');
+        $query = $this->db->get();
+        
+        $result = $query->result();        
+        return $result;
+    }
+
    
 
    
