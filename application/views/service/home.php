@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const eventList = document.getElementById('event-list');
 
   // Charger événements non planifiés pour drag & drop
-  fetch('/Services/get_entrees_non_planifiees')
+  fetch('/Services/get_entrees_non_planifiees/<?php echo $reservation->reservationId ;?>')
     .then(res => res.json())
     .then(events => {
       events.forEach(event => {

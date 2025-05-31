@@ -24,8 +24,8 @@ class Services extends CI_Controller {
         }
     }
 
-    public function get_entrees_non_planifiees() {
-    $events = $this->entrees_model->get_non_planifiees();
+    public function get_entrees_non_planifiees($resId) {
+    $events = $this->entrees_model->get_non_planifiees($resId);
     echo json_encode($events);
 }
 

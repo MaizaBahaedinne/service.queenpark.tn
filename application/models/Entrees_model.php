@@ -40,8 +40,10 @@ class Entrees_model extends CI_Model {
         }
 
 
-        public function get_non_planifiees() {
+        public function get_non_planifiees($resId) {
                 $this->db->where('heurePrevu IS NULL');
+                $this->db->where('reservationId = ', $resId );
+                
                 $query = $this->db->get($this->table);
                 $result = [];
 
