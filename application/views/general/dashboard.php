@@ -102,9 +102,10 @@
                         <td><?php echo $record->salle ?></td>
                         <td><?php echo $record->type ?><br><?php echo $record->titre ?></td>
                         <td>
-                          <?php if ($record->cuisine == 1 ){ echo '<i class="fa fa-cutlery"></i>';}  ?>
-                          <?php if ($record->tableCM == 1 ){ echo '<i class="fa fa-file" ></i> ';}  ?>
+                          <?php if ($record->cuisine == 1) { echo '<i class="fas fa-utensils"></i>'; } ?>
+                          <?php if ($record->tableCM == 1) { echo '<i class="fas fa-file"></i>'; } ?>
                         </td>
+
                        
                         <td class="text-center">
                           <?php
