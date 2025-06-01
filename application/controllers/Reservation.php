@@ -157,7 +157,7 @@ class Reservation extends BaseController
                     if (isset($quantitesRetour[$i]) && trim($quantitesRetour[$i]) !== '') {
                         $dataToInsert[] = array(
                             'entreeId'         => $entreeIds[$i],
-                            'quantiteRetournee'=> (int)$quantitesRetour[$i],
+                            'quantiteRetournee'=> $quantitesRetour[$i],
                             'noteRetour'       => htmlspecialchars($notes[$i]),
                             'createdBy'        => $createdBy,
                             'createdDTM'       => $createdDTM
