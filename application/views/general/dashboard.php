@@ -87,6 +87,7 @@
                         <th>salle</th>
                         <th>Evénement</th>
                         <th>option</th>
+                        <th>nombre</th>
 						           
                         
                         <th class="text-center">Actions</th>
@@ -133,6 +134,7 @@
                               <?php endif; ?>
                            
                         </td>
+                        <td><?php echo $record->nbPlace </td>
                     </tr>
                     <?php
                         }
