@@ -134,7 +134,7 @@
                               <?php endif; ?>
                            
                         </td>
-                        <td><?php echo $record->nbPlace </td>
+                        <td><?php echo $record->nbPlace ?></td>
                     </tr>
                     <?php
                         }
