@@ -107,7 +107,7 @@
                           <?php if ($record->tableCM == 1) { echo '<i class="fas fa-file"></i>'; } ?>
                         </td>
 
-                       
+                       <td><?php echo $record->nbPlace ?></td>
                         <td class="text-center">
                           <?php
                               $now = new DateTime();
@@ -134,7 +134,7 @@
                               <?php endif; ?>
                            
                         </td>
-                        <td><?php echo $record->nbPlace ?></td>
+                        
                     </tr>
                     <?php
                         }
